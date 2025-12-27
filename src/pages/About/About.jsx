@@ -9,9 +9,9 @@ const About = () => {
   ];
   return (
     <>
-      <BigBanner title="Our Story" showTitle={true} images={apiImages} />
+      <BigBanner title="Our Story" showTitle={true} images={apiImages} />   
     </>
   );
 };
-
+                                                                            
 export default About;

@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import React, { useRef, useState } from "react";
+ 
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX, Loader2 } from "lucide-react";
 
 const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
@@ -14,7 +15,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
 
   // Smooth Motion Values
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.4]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
   const textY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
@@ -67,7 +68,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
           </div>
           {/* Professional Overlays */}
           <div className="absolute inset-0 video-mask z-10" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f0f]/60 via-transparent to-[#0f0f0f] z-10" />
+          <div className="absolute inset-0 bg-linear-to-b from-[#0f0f0f]/60 via-transparent to-[#0f0f0f] z-10" />
         </motion.div>
 
         {/* Content Layer */}
@@ -122,7 +123,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
         {/* Vertical Scroll Indicator */}
         <div className="absolute right-10 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col items-center gap-8">
           <span className="rotate-90 text-white/30 text-[10px] uppercase tracking-[0.5em] origin-center">Scroll</span>
-          <div className="w-[1px] h-32 bg-white/10 relative overflow-hidden">
+          <div className="w-px h-32 bg-white/10 relative overflow-hidden">
             <motion.div 
               style={{ scaleY: scrollYProgress }}
               className="absolute top-0 left-0 w-full h-full bg-[#F9AE1A] origin-top"

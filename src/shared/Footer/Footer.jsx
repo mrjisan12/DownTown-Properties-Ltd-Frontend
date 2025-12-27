@@ -17,9 +17,7 @@ const Footer = ({ socialLinks = [] }) => {
   // Error State
   if (error)
     return (
-      <div className="py-10 text-center bg-slate-900 text-red-400">
-        Error loading site information.
-      </div>
+      <FooterSkeletons />
     );
 
   const footerData = data?.data?.[0];

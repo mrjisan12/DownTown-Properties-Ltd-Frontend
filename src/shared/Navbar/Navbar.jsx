@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import React ,{ useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Phone, X, ArrowRight, Share2, ExternalLink, Instagram, Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
-// eslint-disable-next-line no-unused-vars
+import { 
+  Phone, X, ArrowRight, ExternalLink, 
+  Instagram, Facebook, Twitter, Linkedin, Youtube 
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
@@ -12,57 +14,53 @@ const navItems = [
   { label: "Contact", path: "/contact" },
 ];
 
+// Mapping object for Lucide icons
 const platformIcons = {
   instagram: <Instagram size={20} />,
   facebook: <Facebook size={20} />,
   twitter: <Twitter size={20} />,
   linkedin: <Linkedin size={20} />,
   youtube: <Youtube size={20} />,
+  whatsapp: <Phone size={20} />, // Fallback for WhatsApp
   default: <ExternalLink size={20} />,
 };
 
-const Navbar = ({socialLinks}) => {
+const Navbar = ({ socialLinks = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const menuRef = useRef(null);
-  
 
+  // 1. Dynamic logic: Sort links by API position and handle icon mapping
+  const sortedSocialLinks = [...socialLinks].sort((a, b) => a.position - b.position);
+
+  const getPlatformIcon = (platform) => {
+    const key = platform?.toLowerCase();
+    return platformIcons[key] || platformIcons.default;
+  };
+
+  // 2. Scroll management
   useEffect(() => {
-    let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          if (currentScrollY < 50) {
-            setIsVisible(true);
-          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            setIsVisible(false);
-          } else {
-            setIsVisible(true);
-          }
-          setLastScrollY(currentScrollY);
-          ticking = false;
-        });
-        ticking = true;
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
       }
+      setLastScrollY(currentScrollY);
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  // 3. Body scroll lock
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
   }, [isOpen]);
-
-  const getPlatformIcon = (platform) => {
-    const key = platform.toLowerCase();
-    return platformIcons[key] || platformIcons.default;
-  };
 
   return (
     <>
@@ -72,7 +70,7 @@ const Navbar = ({socialLinks}) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-60"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-[60]"
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -82,17 +80,14 @@ const Navbar = ({socialLinks}) => {
         initial={{ y: 0 }}
         animate={{ y: isVisible ? 0 : -100 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="fixed top-0 left-0 right-0 z-70"
+        className="fixed top-0 left-0 right-0 z-[70]"
       >
-        <div className="h-0.5 w-full bg-linear-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         
         <div className="mx-auto px-6 h-24 flex items-center justify-between bg-background/80 backdrop-blur-2xl border-b border-white/5">
           
-          {/* Logo - Positioned Left */}
-          <motion.div 
-            className="flex-1 flex justify-start"
-            whileHover={{ scale: 1.02 }}
-          >
+          {/* Logo */}
+          <motion.div className="flex-1 flex justify-start" whileHover={{ scale: 1.02 }}>
             <NavLink to="/">
               <img 
                 src="/src/assets/dwntwn.png" 
@@ -102,19 +97,19 @@ const Navbar = ({socialLinks}) => {
             </NavLink>
           </motion.div>
 
-          {/* New Centered Title - Desktop & Tablet */}
-          <div className="hidden sm:flex flex-2 flex-col items-center justify-center text-center">
+          {/* Centered Title */}
+          <div className="hidden sm:flex flex-[2] flex-col items-center justify-center text-center">
             <motion.h1 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-xl md:text-2xl font-bold tracking-[0.15em] uppercase bg-linear-to-b from-foreground to-foreground/60 bg-clip-text text-transparent"
+              className="text-xl md:text-2xl font-bold tracking-[0.15em] uppercase bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-transparent"
             >
               Down Town Properties LTD
             </motion.h1>
-            <div className="h-1px w-24 bg-linear-to-r from-transparent via-primary to-transparent mt-1 opacity-50" />
+            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-primary to-transparent mt-1 opacity-50" />
           </div>
 
-          {/* Menu Toggle - Positioned Right */}
+          {/* Menu Toggle */}
           <div className="flex-1 flex justify-end">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -125,7 +120,7 @@ const Navbar = ({socialLinks}) => {
               <span className="hidden md:block text-xs font-bold uppercase tracking-widest text-foreground/70">Menu</span>
               <div className="w-6 h-4 flex flex-col justify-between items-end">
                 <motion.span 
-                   animate={{ width: isOpen ? "100%" : "100%", rotate: isOpen ? 45 : 0, y: isOpen ? 7 : 0 }}
+                   animate={{ width: "100%", rotate: isOpen ? 45 : 0, y: isOpen ? 7 : 0 }}
                    className="h-0.5 bg-primary w-full rounded-full origin-right" 
                 />
                 <motion.span 
@@ -133,7 +128,7 @@ const Navbar = ({socialLinks}) => {
                    className="h-0.5 bg-primary w-2/3 rounded-full" 
                 />
                 <motion.span 
-                   animate={{ width: isOpen ? "100%" : "100%", rotate: isOpen ? -45 : 0, y: isOpen ? -7 : 0 }}
+                   animate={{ width: "100%", rotate: isOpen ? -45 : 0, y: isOpen ? -7 : 0 }}
                    className="h-0.5 bg-primary w-full rounded-full origin-right" 
                 />
               </div>
@@ -142,13 +137,13 @@ const Navbar = ({socialLinks}) => {
         </div>
       </motion.nav>
 
-      {/* Slide-out Menu (Sidebar) */}
+      {/* Sidebar Menu */}
       <motion.div
         ref={menuRef}
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? 0 : "100%" }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-        className="fixed top-0 right-0 h-screen w-full max-w-105 bg-card/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl z-80 overflow-y-auto"
+        className="fixed top-0 right-0 h-screen w-full max-w-[420px] bg-card/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl z-[80] overflow-y-auto"
       >
         <div className="relative flex flex-col h-full p-10">
           <div className="flex justify-between items-center mb-16">
@@ -183,13 +178,16 @@ const Navbar = ({socialLinks}) => {
           </nav>
 
           <div className="mt-auto pt-10">
+            {/* Dynamic Social Icons */}
             <div className="grid grid-cols-4 gap-4 mb-10">
-              {socialLinks.map((social) => (
+              {sortedSocialLinks.map((social) => (
                 <a 
                   key={social.id} 
                   href={social.url} 
                   target="_blank" 
+                  rel="noopener noreferrer"
                   className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:border-primary/50 hover:text-primary transition-all"
+                  title={social.platform}
                 >
                   {getPlatformIcon(social.platform)}
                 </a>
@@ -198,7 +196,7 @@ const Navbar = ({socialLinks}) => {
             
             <a
               href="tel:01712345667"
-              className="flex text-white items-center justify-center gap-4 bg-primary  p-5 rounded-2xl font-bold hover:scale-[1.02] transition-transform"
+              className="flex text-white items-center justify-center gap-4 bg-primary p-5 rounded-2xl font-bold hover:scale-[1.02] transition-transform"
             >
               <Phone size={20} />
               <span>Contact Support</span>
