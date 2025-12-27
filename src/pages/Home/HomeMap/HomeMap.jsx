@@ -23,7 +23,7 @@ const HomeMap = ({ google_map_embed, loading }) => {
     <section
       className="relative w-full py-24 bg-center bg-cover"
       style={{
-        backgroundImage: "url('/src/assets/map-bg.png')", // <-- background image unchanged
+        backgroundImage: "url('/src/assets/map-bg.png')",
         backgroundColor: "#d7d2ce",
       }}
     >
@@ -57,7 +57,7 @@ const HomeMap = ({ google_map_embed, loading }) => {
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
 
-            {/* 3 Dropdowns - Bottom Left (Light background) */}
+            {/* 3 Dropdowns - Bottom Left (Light gray menu background) */}
             <div className="absolute bottom-6 left-6 flex space-x-3 z-10">
               {["location", "status", "type"].map((key) => (
                 <div key={key} className="relative">
@@ -85,14 +85,14 @@ const HomeMap = ({ google_map_embed, loading }) => {
                     </svg>
                   </button>
 
-                  {/* Dropdown Menu opens upward with soft light color */}
+                  {/* Dropdown Menu opens upward with soft light gray background */}
                   {openDropdown === key && (
-                    <ul className="absolute left-0 bottom-full mb-1 w-44 bg-[#f9f9f9] border border-gray-200 shadow-lg">
+                    <ul className="absolute left-0 bottom-full mb-1 w-44 bg-gray-100 border border-gray-200 shadow-lg">
                       {dropdownMenus[key].map((item) => (
                         <li
                           key={item}
                           onClick={() => handleSelect(key, item)}
-                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
                         >
                           {item}
                         </li>
