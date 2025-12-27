@@ -1,35 +1,50 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useGetFooterQuery } from "@/redux/api/homeApi";
 
 const Footer = () => {
+  const { data, isLoading, error } = useGetFooterQuery();
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-10 text-gray-400">Loading footer...</div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        Failed to load footer
+      </div>
+    );
+  }
+
+  // Extract the first element from the data array
+  const footerData = data?.data?.[0];
+
+  if (!footerData) return null; // fallback if no data
+
   return (
     <footer className="bg-gray-900 text-gray-300 mt-16">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
 
         {/* Company Info */}
         <div>
-
-          <div className="flex items-center mb-1.5">
-          <img
-            src="/src/assets/dwntwn.png"
-            alt="Downtown Properties Ltd"
-            className="h-10 object-contain"
-          />
-        </div>
-          {/* <h2 className="text-xl font-semibold text-white mb-3">
-            Downtown Properties Ltd
-          </h2> */}
-          <p className="text-sm leading-relaxed">
-            We provide trusted real estate solutions including apartments,
-            lands, and commercial properties across Bangladesh.
+          <div className="flex items-center mb-2">
+            <img
+              src={footerData.logo}
+              alt={footerData.site_name}
+              className="h-20 object-contain"
+            />
+          </div>
+          <p className="text-sm ml-4 leading-relaxed">
+            {footerData.site_tagline || "Trusted real estate solutions across Bangladesh."}
           </p>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Quick Links
-          </h3>
+          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             <li><NavLink to="/" className="hover:text-white">Home</NavLink></li>
             <li><NavLink to="/about" className="hover:text-white">About</NavLink></li>
@@ -41,9 +56,7 @@ const Footer = () => {
 
         {/* Services */}
         <div>
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Our Services
-          </h3>
+          <h3 className="text-lg font-semibold text-white mb-3">Our Services</h3>
           <ul className="space-y-2 text-sm">
             <li>Residential Apartments</li>
             <li>Commercial Space</li>
@@ -54,19 +67,16 @@ const Footer = () => {
 
         {/* Contact Info */}
         <div>
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Contact Us
-          </h3>
-
+          <h3 className="text-lg font-semibold text-white mb-3">Contact Us</h3>
           <div className="space-y-2 text-sm">
             <p className="flex items-center gap-2">
-              <MapPin size={16} /> Dhanmondi, Dhaka
+              <MapPin size={16} /> {footerData.address}
             </p>
             <p className="flex items-center gap-2">
-              <Phone size={16} /> 01712-345667
+              <Phone size={16} /> {footerData.primary_phone}
             </p>
             <p className="flex items-center gap-2">
-              <Mail size={16} /> info@downtownproperties.com
+              <Mail size={16} /> {footerData.primary_email}
             </p>
           </div>
         </div>
@@ -75,7 +85,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-700 text-center py-4 text-sm">
-        © {new Date().getFullYear()} Downtown Properties Ltd. All rights reserved.
+        {footerData.footer_text || `© ${new Date().getFullYear()} ${footerData.site_name}. All rights reserved.`}
       </div>
     </footer>
   );

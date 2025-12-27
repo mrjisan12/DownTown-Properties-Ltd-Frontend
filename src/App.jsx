@@ -1,15 +1,15 @@
+import { Outlet } from "react-router";
+import Navbar from "./shared/Navbar/Navbar";
+import Footer from "./shared/Footer/Footer";
 
-import './App.css'
-
-function App() {
-
+const App = () => {
   return (
-    <>
-      
-      <h1 className='text-2xl'>Down Town Properties</h1>
-      
-    </>
-  )
-}
+    <div className="mx-auto">
+      <Navbar />
+      <Outlet></Outlet>
+      <Footer />
+    </div>
+  );
+};
 
-export default App
+export default App;
