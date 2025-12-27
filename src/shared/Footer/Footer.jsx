@@ -3,23 +3,28 @@ import { NavLink } from "react-router-dom";
 import { useGetSettingsQuery } from "@/redux/api/homeApi";
 import FooterSkeletons from "@/components/skeletons/footerSkeletons";
 
-const Footer = () => {
+const Footer = ({ socialLinks = [] }) => {
   const { data, isLoading, error } = useGetSettingsQuery();
+
+  // SORT SAFELY
+  const sortedSocialLinks = [...socialLinks].sort(
+    (a, b) => a.position - b.position
+  );
 
   // Loading State
   if (isLoading) return <FooterSkeletons />;
 
   // Error State
-  if (error) return (
-    <div className="py-10 text-center bg-slate-900 text-red-400">
-      Error loading site information.
-    </div>
-  );
+  if (error)
+    return (
+      <div className="py-10 text-center bg-slate-900 text-red-400">
+        Error loading site information.
+      </div>
+    );
 
   const footerData = data?.data?.[0];
   if (!footerData) return null;
 
-  // Pure JS Data Arrays for cleaner JSX
   const quickLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -32,13 +37,13 @@ const Footer = () => {
     "Residential Apartments",
     "Commercial Space",
     "Land Development",
-    "Property Consultancy"
+    "Property Consultancy",
   ];
 
   return (
-    <footer className="bg-slate-950 text-slate-400 mt-16 border-t border-white/5 transition-all duration-300">
+    <footer className="bg-slate-950 text-slate-400 mt-16 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-        
+
         {/* Company Info */}
         <div className="space-y-6">
           <img
@@ -46,9 +51,36 @@ const Footer = () => {
             alt={footerData.site_name}
             className="h-16 w-auto object-contain hover:scale-105 transition-transform"
           />
+
           <p className="text-sm leading-relaxed text-slate-500">
-            {footerData.site_tagline || "Providing world-class real estate solutions with transparency and excellence."}
+            {footerData.site_tagline ||
+              "Providing world-class real estate solutions with transparency and excellence."}
           </p>
+
+          {/* ✅ Social Links NOW WORK */}
+          {sortedSocialLinks.length > 0 && (
+            <div className="flex items-center gap-4 pt-2">
+              {sortedSocialLinks.map((social) => (
+                <a
+                  key={social.id}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.platform}
+                  className="group"
+                >
+                  <img
+                    src={social.icon}
+                    alt={social.platform}
+                    className="h-8 w-8 object-contain opacity-70
+                               group-hover:opacity-100
+                               group-hover:scale-110
+                               transition-all duration-300"
+                  />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Quick Links */}
@@ -57,8 +89,8 @@ const Footer = () => {
           <ul className="space-y-3 text-sm">
             {quickLinks.map((link) => (
               <li key={link.name}>
-                <NavLink 
-                  to={link.path} 
+                <NavLink
+                  to={link.path}
                   className="hover:text-white hover:pl-2 transition-all duration-200"
                 >
                   {link.name}
@@ -92,18 +124,18 @@ const Footer = () => {
               <p key={idx} className="flex items-start gap-3 group">
                 <span className="text-blue-500 group-hover:text-blue-400 transition-colors">
                   {item.icon}
-                </span> 
+                </span>
                 {item.text}
               </p>
             ))}
           </div>
         </div>
-
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-white/5 py-8 text-center text-xs tracking-widest text-slate-600 uppercase">
-        {footerData.footer_text || `© ${new Date().getFullYear()} ${footerData.site_name}. All rights reserved.`}
+        {footerData.footer_text ||
+          `© ${new Date().getFullYear()} ${footerData.site_name}. All rights reserved.`}
       </div>
     </footer>
   );

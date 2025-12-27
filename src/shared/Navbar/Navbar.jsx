@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { Phone, X, ArrowRight, Share2, ExternalLink, Instagram, Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
-import { useGetSocialLinksQuery } from "@/redux/api/homeApi";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -22,14 +21,12 @@ const platformIcons = {
   default: <ExternalLink size={20} />,
 };
 
-const Navbar = () => {
+const Navbar = ({socialLinks}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const menuRef = useRef(null);
   
-  const { data: socialLinksData } = useGetSocialLinksQuery();
-  const socialLinks = socialLinksData?.data || [];
 
   useEffect(() => {
     let ticking = false;
