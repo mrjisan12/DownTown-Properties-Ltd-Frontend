@@ -1,136 +1,137 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import Autoplay from "embla-carousel-autoplay";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { Volume2, VolumeX, Loader2 } from "lucide-react";
 
-const DEFAULT_IMAGES = [
-  "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?q=80&w=1920&auto=format&fit=crop"
-];
-
-const BigBanner = ({ 
-  title = "DOWNTOWN", 
-  showTitle = true, 
-  images = [] 
-}) => {
+const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
   const containerRef = useRef(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const displayImages = images.length > 0 ? images : DEFAULT_IMAGES;
-
-  const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(true); // Default to muted for autoplay support
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    // "start end" means animation starts as soon as the top of the component enters the bottom of the viewport
-    offset: ["start end", "end start"],
+    offset: ["start start", "end end"],
   });
 
-  // Smooth out the scroll progress for that "liquid" feel
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
-    damping: 25,
-    restDelta: 0.001
-  });
+  // Smooth Motion Values
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.4]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
-  /* ------------------ Light Theme Scroll Animations ------------------ */
-  
-  // Banner Expansion (Starts narrow/small, grows to full screen)
-  const clipPath = useTransform(
-    smoothProgress,
-    [0, 0.4], // Completes expansion 40% into the scroll path
-    ["inset(12% 15% 12% 15% round 40px)", "inset(0% 0% 0% 0% round 0px)"]
-  );
-
-  // Subtle Image Parallax
-  const imageScale = useTransform(smoothProgress, [0, 1], [1.2, 1.05]);
-  
-  // Title Floating & Fade
-  const titleY = useTransform(smoothProgress, [0.1, 0.5], ["50px", "-100px"]);
-  const titleOpacity = useTransform(smoothProgress, [0.1, 0.4], [0, 1]);
-  const titleBlur = useTransform(smoothProgress, [0, 0.2], ["blur(10px)", "blur(0px)"]);
+  const styles = `
+    .video-mask {
+      background: radial-gradient(circle at center, transparent 0%, rgba(15, 15, 15, 0.4) 100%);
+    }
+    .text-glow {
+      text-shadow: 0 0 30px rgba(249, 174, 26, 0.3);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  `;
 
   return (
-    <div ref={containerRef} className="relative w-full h-[160vh] bg-neutral-50">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[150vh] bg-[#0f0f0f]">
+      <style>{styles}</style>
+
+      {/* Sticky Video Wrapper */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
         
-        {/* Light Theme Title */}
-        {showTitle && (
-          <motion.div
-            style={{ 
-              y: titleY, 
-              opacity: titleOpacity,
-              filter: titleBlur
-            }}
-            className="absolute z-30 w-full text-center pointer-events-none"
-          >
-            <h1 className="text-[12vw] md:text-[10vw] font-black leading-none text-white drop-shadow-2xl">
-              {title.toUpperCase()}
-            </h1>
-          </motion.div>
-        )}
+        {/* Loading Overlay */}
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div 
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-50 flex items-center justify-center bg-[#0f0f0f]"
+            >
+              <Loader2 className="w-8 h-8 text-[#F9AE1A] animate-spin" />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* The Carousel Container */}
-        <motion.div
-          style={{ 
-            clipPath: clipPath,
-            willChange: "clip-path"
-          }}
-          className="relative w-full h-full overflow-hidden bg-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)]"
+        {/* Video Engine */}
+        <motion.div 
+          style={{ scale: videoScale, opacity: videoOpacity }}
+          className="absolute inset-0 w-full h-full"
         >
-          <Carousel
-            plugins={[autoplay.current]}
-            opts={{ 
-              loop: true,
-              duration: 45, 
-            }}
-            className="w-full h-full"
-          >
-            <CarouselContent className="ml-0 h-full">
-              {displayImages.map((img, index) => (
-                <CarouselItem key={index} className="pl-0 h-full">
-                  <div className="relative w-full h-full overflow-hidden">
-                    <motion.img
-                      style={{ 
-                        scale: imageScale,
-                      }}
-                      src={img.url || img}
-                      alt={`Slide ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                    
-                    {/* Light/Clean Overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10" />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-
-          {/* Minimalist Progress Indicator */}
-          <div className="absolute bottom-12 left-12 z-40 flex items-center gap-4">
-             <div className="h-[2px] w-24 bg-white/30 overflow-hidden">
-                <motion.div 
-                  className="h-full bg-white origin-left"
-                  style={{ scaleX: smoothProgress }}
-                />
-             </div>
-             <span className="text-white text-[10px] font-bold tracking-widest uppercase">
-                Explore
-             </span>
+          <div className="relative w-full h-full scale-[1.3] pointer-events-none">
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${isMuted ? 1 : 0}&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&enablejsapi=1`}
+              className="w-full h-full object-cover"
+              onLoad={() => setIsLoading(false)}
+              allow="autoplay; encrypted-media"
+              title="Hero Background Video"
+            />
           </div>
+          {/* Professional Overlays */}
+          <div className="absolute inset-0 video-mask z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f0f]/60 via-transparent to-[#0f0f0f] z-10" />
         </motion.div>
+
+        {/* Content Layer */}
+        <div className="relative z-20 h-full w-full flex flex-col items-center justify-center px-6">
+          <motion.div 
+            style={{ y: textY, opacity: textOpacity }}
+            className="text-center max-w-5xl"
+          >
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-block px-4 py-1.5 mb-6 glass-pill text-[10px] md:text-xs font-bold tracking-[0.4em] text-[#F9AE1A] uppercase"
+            >
+              Beyond the Horizon
+            </motion.span>
+            
+            <h1 className="text-5xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter text-white mb-8 text-glow">
+              DOWN<span className="text-[#96D9F9]">.</span>TOWN
+            </h1>
+
+            <div className="flex items-center justify-center gap-8 text-white/40 font-medium text-[10px] md:text-sm tracking-[0.2em] uppercase">
+              <span className="hover:text-white transition-colors cursor-default">4K HDR</span>
+              <span className="w-1 h-1 rounded-full bg-white/20" />
+              <span className="hover:text-white transition-colors cursor-default">Spatial Sound</span>
+              <span className="w-1 h-1 rounded-full bg-white/20" />
+              <span className="hover:text-white transition-colors cursor-default">Exclusive Content</span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Interaction Controls */}
+        <div className="absolute bottom-10 left-10 z-30 flex items-center gap-6">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsMuted(!isMuted)}
+            className="flex items-center gap-3 glass-pill px-5 py-3 rounded-full group overflow-hidden"
+          >
+            <div className="relative w-5 h-5 flex items-center justify-center">
+              {isMuted ? (
+                <VolumeX className="w-full h-full text-white/60 group-hover:text-[#F9AE1A] transition-colors" />
+              ) : (
+                <Volume2 className="w-full h-full text-[#F9AE1A]" />
+              )}
+            </div>
+            <span className="text-white font-bold text-[10px] uppercase tracking-widest">
+              {isMuted ? "Unmute Audio" : "Audio On"}
+            </span>
+          </motion.button>
+        </div>
+
+        {/* Vertical Scroll Indicator */}
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col items-center gap-8">
+          <span className="rotate-90 text-white/30 text-[10px] uppercase tracking-[0.5em] origin-center">Scroll</span>
+          <div className="w-[1px] h-32 bg-white/10 relative overflow-hidden">
+            <motion.div 
+              style={{ scaleY: scrollYProgress }}
+              className="absolute top-0 left-0 w-full h-full bg-[#F9AE1A] origin-top"
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default BigBanner;
+export default HomeVideo;

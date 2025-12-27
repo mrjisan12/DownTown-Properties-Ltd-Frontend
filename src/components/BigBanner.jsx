@@ -10,6 +10,7 @@ import {
 const DEFAULT_IMAGES = [
   "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1920&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?q=80&w=1920&auto=format&fit=crop"
 ];
 
 const BigBanner = ({ 
@@ -17,11 +18,11 @@ const BigBanner = ({
   showTitle = true, 
   images = [] 
 }) => {
-  const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
   const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const displayImages = images.length > 0 ? images : DEFAULT_IMAGES;
+
+  const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
   useEffect(() => {
     setIsLoaded(true);
@@ -29,110 +30,103 @@ const BigBanner = ({
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    // "start end" means animation starts as soon as the top of the component enters the bottom of the viewport
+    offset: ["start end", "end start"],
   });
 
+  // Smooth out the scroll progress for that "liquid" feel
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 40,
+    damping: 25,
     restDelta: 0.001
   });
 
-  /* ------------------ Refined Animations ------------------ */
-  // The banner starts with margins and rounds corners, then expands to fill screen
-  const marginX = useTransform(smoothProgress, [0, 0.2], ["4rem", "0rem"]);
-  const bannerScale = useTransform(smoothProgress, [0, 0.2], [0.92, 1]);
-  const bannerHeight = useTransform(smoothProgress, [0, 0.2], ["80vh", "100vh"]);
+  /* ------------------ Light Theme Scroll Animations ------------------ */
   
-  // Image inner parallax (the image zooms slightly as you scroll)
-  const imageInnerScale = useTransform(smoothProgress, [0, 1], [1, 1.15]);
+  // Banner Expansion (Starts narrow/small, grows to full screen)
+  const clipPath = useTransform(
+    smoothProgress,
+    [0, 0.4], // Completes expansion 40% into the scroll path
+    ["inset(12% 15% 12% 15% round 40px)", "inset(0% 0% 0% 0% round 0px)"]
+  );
 
-  // Title Animations (Keeping your specific theme/position)
-  const titleY = useTransform(smoothProgress, [0, 0.4], ["0%", "-120%"]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0]);
-  const splitPosition = useTransform(smoothProgress, [0, 0.3], ["50%", "100%"]);
+  // Subtle Image Parallax
+  const imageScale = useTransform(smoothProgress, [0, 1], [1.2, 1.05]);
+  
+  // Title Floating & Fade
+  const titleY = useTransform(smoothProgress, [0.1, 0.5], ["50px", "-100px"]);
+  const titleOpacity = useTransform(smoothProgress, [0.1, 0.4], [0, 1]);
+  const titleBlur = useTransform(smoothProgress, [0, 0.2], ["blur(10px)", "blur(0px)"]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[180vh] bg-white">
+    <div ref={containerRef} className="relative w-full h-[160vh] bg-neutral-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
-        {/* Your Original Title Theme - Preserved */}
+        {/* Light Theme Title */}
         {showTitle && (
           <motion.div
-            style={{ y: titleY, opacity: titleOpacity }}
-            className="absolute top-13 z-30 w-full text-center pointer-events-none"
+            style={{ 
+              y: titleY, 
+              opacity: titleOpacity,
+              filter: titleBlur
+            }}
+            className="absolute z-30 w-full text-center pointer-events-none"
           >
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-7xl md:text-9xl font-black tracking-tighter relative"
-            >
-              <span className="relative inline-block">
-                <span className="absolute inset-0 text-transparent" style={{ WebkitTextStroke: "2px white" }}>
-                  {title.toUpperCase()}
-                </span>
-                
-                <motion.span
-                  style={{
-                    background: "black",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    clipPath: useTransform(splitPosition, (pos) => `inset(0 0 calc(100% - ${pos}) 0)`),
-                  }}
-                  className="absolute inset-0"
-                >
-                  {title.toUpperCase()}
-                </motion.span>
-                
-                <span className="text-transparent" style={{ WebkitTextStroke: "2px white" }}>
-                  {title.toUpperCase()}
-                </span>
-              </span>
-            </motion.h1>
+            <h1 className="text-[12vw] md:text-[10vw] font-black leading-none text-white drop-shadow-2xl">
+              {title.toUpperCase()}
+            </h1>
           </motion.div>
         )}
 
-        {/* Dynamic Premium Carousel Section */}
+        {/* The Carousel Container */}
         <motion.div
           style={{ 
-            marginLeft: marginX, 
-            marginRight: marginX, 
-            // borderRadius, 
-            scale: bannerScale,
-            height: bannerHeight,
-            willChange: "transform, border-radius, width"
+            clipPath: clipPath,
+            willChange: "clip-path"
           }}
-          className="relative w-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.2)] bg-neutral-100"
+          className="relative w-full h-full overflow-hidden bg-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)]"
         >
           <Carousel
             plugins={[autoplay.current]}
             opts={{ 
               loop: true,
-              duration: 50, // Makes the transition between slides smoother
+              duration: 45, 
             }}
             className="w-full h-full"
           >
-            <CarouselContent className="-ml-0"> {/* ml-0 removes gap glitching */}
+            <CarouselContent className="ml-0 h-full">
               {displayImages.map((img, index) => (
                 <CarouselItem key={index} className="pl-0 h-full">
                   <div className="relative w-full h-full overflow-hidden">
                     <motion.img
                       style={{ 
-                        scale: imageInnerScale,
-                        willChange: "transform"
+                        scale: imageScale,
                       }}
                       src={img.url || img}
-                      alt={`Banner ${index + 1}`}
-                      className="w-full h-full object-cover select-none"
+                      alt={`Slide ${index + 1}`}
+                      className="w-full h-full object-cover"
                     />
-                    {/* Subtle Overlay for Depth */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10" />
+                    
+                    {/* Light/Clean Overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10" />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
           </Carousel>
+
+          {/* Minimalist Progress Indicator */}
+          <div className="absolute bottom-12 left-12 z-40 flex items-center gap-4">
+             <div className="h-[2px] w-24 bg-white/30 overflow-hidden">
+                <motion.div 
+                  className="h-full bg-white origin-left"
+                  style={{ scaleX: smoothProgress }}
+                />
+             </div>
+             <span className="text-white text-[10px] font-bold tracking-widest uppercase">
+                Explore
+             </span>
+          </div>
         </motion.div>
       </div>
     </div>
