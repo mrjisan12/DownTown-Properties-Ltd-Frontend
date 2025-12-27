@@ -2,7 +2,7 @@ import { baseApi } from "./baseApi";
 
 export const homeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFooter: builder.query({
+    getSettings: builder.query({
       query: () => ({
         url: "/settings",
         method: "GET",
@@ -23,6 +23,7 @@ export const homeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["HomeApi"],
     }),
+
     getSocialLinks: builder.query({
       query: () => ({
         url: "/social-links",
@@ -30,7 +31,16 @@ export const homeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["HomeApi"],
     }),
+
+    getHomeMap: builder.query({
+      query: () => ({
+        url: "/home-map",
+        method: "GET",
+      }),
+      providesTags: ["HomeApi"],
+    }),
+
   }),
 });
 
-export const { useGetFooterQuery,useGetHomeBannerQuery ,useGetMiniAboutQuery,useGetSocialLinksQuery } = homeApi;
+export const { useGetSettingsQuery, useGetHomeBannerQuery ,useGetMiniAboutQuery,useGetSocialLinksQuery, useGetHomeMapQuery } = homeApi;

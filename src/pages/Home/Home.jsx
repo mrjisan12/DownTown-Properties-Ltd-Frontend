@@ -3,10 +3,12 @@ import BigBanner from "@/components/BigBanner";
 import {
   useGetHomeBannerQuery,
   useGetMiniAboutQuery,
+  useGetSettingsQuery,
 } from "@/redux/api/homeApi";
 import HomeVideo from "./HomeVideo/HomeVideo"; // Ensure path is correct
 import MiniAbout from "./MiniAbout/MiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
+import HomeMap from "./HomeMap/HomeMap";
 
 const Home = () => {
   // Banner API
@@ -14,6 +16,9 @@ const Home = () => {
 
   // Mini About API
   const { data: miniAboutApi, isLoading: miniAboutLoading } = useGetMiniAboutQuery();
+
+  // Home Map API
+  const { data: settingData, isLoading: settingDataLoading } = useGetSettingsQuery();
   
   // Extract banner images
   const apiImages = bannerData?.data?.map((item) => item.image);
@@ -47,6 +52,10 @@ const Home = () => {
 
       {/* Building Section */}
       <HomeBuilding />
+
+      {/* Map Section */}
+      <HomeMap google_map_embed={settingData?.data?.[0]?.google_map_embed} loading={settingDataLoading} />
+
     </div>
   );
 };

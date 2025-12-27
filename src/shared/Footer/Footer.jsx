@@ -1,10 +1,10 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { useGetFooterQuery } from "@/redux/api/homeApi";
+import { useGetSettingsQuery } from "@/redux/api/homeApi";
 import FooterSkeletons from "@/components/skeletons/footerSkeletons";
 
 const Footer = () => {
-  const { data, isLoading, error } = useGetFooterQuery();
+  const { data, isLoading, error } = useGetSettingsQuery();
 
   // Loading State
   if (isLoading) return <FooterSkeletons />;
