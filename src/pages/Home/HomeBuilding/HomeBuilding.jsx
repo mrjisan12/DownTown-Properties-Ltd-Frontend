@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 
 const HomeBuilding = () => {
@@ -82,11 +83,11 @@ const HomeBuilding = () => {
     <section ref={containerRef} className="w-full  text-black py-32 overflow-hidden relative">
       {/* Dynamic Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-yellow-600/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-zinc-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-1/4 w-125 h-125 bg-yellow-600/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-zinc-600/20 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-[100rem] mx-auto px-8 relative z-10">
+      <div className="max-w-400 mx-auto px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-32">
           <motion.h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[1.1] mb-6">

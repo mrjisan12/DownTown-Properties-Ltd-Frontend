@@ -1,0 +1,28 @@
+/* Custom Easing for a "Premium" feel */
+.ease-quintic {
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Glassmorphism for the background of the nav */
+nav {
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Subtle link underline animation */
+.nav-link-custom::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width .3s;
+}
+
+.nav-link-custom:hover::after {
+  width: 100%;
+}
+
+/* Clean up body padding so content isn't hidden */
+body {
+  padding-top: 0; /* Handled by fixed positioning and margin on main content */
+}

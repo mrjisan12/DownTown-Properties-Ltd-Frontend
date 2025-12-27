@@ -23,7 +23,14 @@ export const homeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["HomeApi"],
     }),
+    getSocialLinks: builder.query({
+      query: () => ({
+        url: "/social-links",
+        method: "GET",
+      }),
+      providesTags: ["HomeApi"],
+    }),
   }),
 });
 
-export const { useGetFooterQuery,useGetHomeBannerQuery ,useGetMiniAboutQuery } = homeApi;
+export const { useGetFooterQuery,useGetHomeBannerQuery ,useGetMiniAboutQuery,useGetSocialLinksQuery } = homeApi;
