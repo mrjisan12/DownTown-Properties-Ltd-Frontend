@@ -11,7 +11,8 @@ import MiniAbout from "./MiniAbout/MiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
 import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
-import HomeProjects from "./HomeProjects/HomeProjects";
+import HomeProjects from "./HomeProjects/HomeProjects";   
+import Contact from "../../components/contact/Contact";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -65,6 +66,9 @@ const Home = () => {
           projects={homeProjectsData?.data}
           loading={homeProjectsLoading}
         />
+
+        <Contact/>
+
       </div>
     </>
   );
