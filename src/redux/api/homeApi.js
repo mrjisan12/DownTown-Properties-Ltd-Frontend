@@ -31,6 +31,13 @@ export const homeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["HomeApi"],
     }),
+    getHomeProjects: builder.query({
+      query: () => ({
+        url: "/projects",
+        method: "GET",
+      }),
+      providesTags: ["HomeApi"],
+    }),
 
     getHomeMap: builder.query({
       query: () => ({
@@ -43,4 +50,4 @@ export const homeApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetSettingsQuery, useGetHomeBannerQuery ,useGetMiniAboutQuery,useGetSocialLinksQuery, useGetHomeMapQuery } = homeApi;
+export const { useGetSettingsQuery, useGetHomeBannerQuery ,useGetMiniAboutQuery,useGetSocialLinksQuery, useGetHomeProjectsQuery, useGetHomeMapQuery } = homeApi;

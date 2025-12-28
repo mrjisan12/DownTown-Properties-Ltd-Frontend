@@ -2,6 +2,7 @@ import React from "react";
 import BigBanner from "@/components/BigBanner";
 import {
   useGetHomeBannerQuery,
+  useGetHomeProjectsQuery,
   useGetMiniAboutQuery,
   useGetSettingsQuery,
 } from "@/redux/api/homeApi";
@@ -10,6 +11,7 @@ import MiniAbout from "./MiniAbout/MiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
 import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
+import HomeProjects from "./HomeProjects/HomeProjects";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -20,7 +22,9 @@ const Home = () => {
 
   const { data: settingData, isLoading: settingDataLoading } =
     useGetSettingsQuery();
-
+  const { data: homeProjectsData, isLoading: homeProjectsLoading } =
+    useGetHomeProjectsQuery();
+  console.log(homeProjectsData);
   const images = bannerData?.data?.map((item) => item.image);
 
   const miniAbout = miniAboutApi?.data?.[0];
@@ -57,6 +61,10 @@ const Home = () => {
             loading={settingDataLoading}
           />
         </div>
+        <HomeProjects
+          projects={homeProjectsData?.data}
+          loading={homeProjectsLoading}
+        />
       </div>
     </>
   );
