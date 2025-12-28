@@ -1,15 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
-  return (
-    <section className="relative w-full py-24 bg-[#f4f2ef]">
-      <div className="max-w-7xl mx-auto px-6"> {/* keep padding */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-stretch">
+  const [leftRatio, setLeftRatio] = useState("60%");
+  const [rightRatio, setRightRatio] = useState("40%");
 
-          {/* LEFT SIDE — 60% */}
-          <div className="lg:col-span-3 flex flex-col justify-between h-full">
-            
+  // Detect scroll or hover
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById("contact-section");
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // When section is fully visible (top near viewport top)
+      if (rect.top >= 0 && rect.top < windowHeight / 2) {
+        setLeftRatio("60%");
+        setRightRatio("40%");
+      } else {
+        setLeftRatio("70%"); // left bigger
+        setRightRatio("30%"); // right smaller
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <section
+      id="contact-section"
+      className="relative w-full py-24 bg-[#f4f2ef]"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex gap-16 items-stretch">
+
+          {/* LEFT SIDE */}
+          <div
+            className="flex flex-col justify-between transition-all duration-500"
+            style={{ width: leftRatio }}
+          >
             {/* Heading */}
             <div>
               <h2 className="text-5xl md:text-6xl font-bold text-gray-900 tracking-wide mb-12">
@@ -66,12 +96,15 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE — 40% */}
-          <div className="lg:col-span-2 relative w-full rounded-3xl overflow-hidden shadow-[0_40px_70px_rgba(0,0,0,0.35)] min-h-[550px] scale-[1.05]">
+          {/* RIGHT SIDE — IMAGE */}
+          <div
+            className="relative rounded-3xl overflow-hidden shadow-[0_40px_70px_rgba(0,0,0,0.35)] transition-all duration-500"
+            style={{ width: rightRatio, minHeight: "550px" }}
+          >
             <img
               src="/src/assets/title/contact.webp"
               alt="Contact"
-              className="w-full h-full object-cover scale-[1.05] contrast-110"
+              className="w-full h-full object-cover scale-[1.05] contrast-110 transition-all duration-500"
             />
             <div className="absolute inset-0 bg-black/10"></div>
           </div>
