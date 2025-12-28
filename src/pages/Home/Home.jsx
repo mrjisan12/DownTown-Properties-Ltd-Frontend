@@ -25,7 +25,6 @@ const Home = () => {
     useGetSettingsQuery();
   const { data: homeProjectsData, isLoading: homeProjectsLoading } =
     useGetHomeProjectsQuery();
-  console.log(homeProjectsData);
   const images = bannerData?.data?.map((item) => item.image);
 
   const miniAbout = miniAboutApi?.data?.[0];
