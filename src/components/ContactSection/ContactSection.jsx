@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Contact = () => {
+const ContactSection = () => {
   const [leftRatio, setLeftRatio] = useState("60%");
   const [rightRatio, setRightRatio] = useState("40%");
 
@@ -115,4 +115,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactSection;
