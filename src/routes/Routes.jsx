@@ -6,6 +6,8 @@ import App from '../App';
 import About from "@/pages/About/About";
 import Projects from "@/pages/Projects/Projects";
 import DetailProject from "@/pages/Projects/DetailProject/DetailProject";
+import Contact from "@/pages/Contact/Contact";
+import Gallery from "@/pages/Gallery/Gallery";
 
 
 export const router = createBrowserRouter([
@@ -24,6 +26,16 @@ export const router = createBrowserRouter([
                 index: true,
                 path:"/about",
                 Component: About ,
+            },
+            {
+                index: true,
+                path:"/contact",
+                Component: Contact ,
+            },
+            {
+                index: true,
+                path:"/gallery",
+                Component: Gallery ,
             },
             {
                 index: true,
