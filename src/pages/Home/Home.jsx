@@ -12,6 +12,7 @@ import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import HomeProjects from "./HomeProjects/HomeProjects";
 import ContactSection from "../../components/ContactSection/ContactSection";
+import { useGetAllProjectsQuery } from "@/redux/api/projectApi";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
