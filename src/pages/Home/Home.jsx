@@ -11,7 +11,7 @@ import MiniAbout from "./MiniAbout/MiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
 import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
-import HomeProjects from "./HomeProjects/HomeProjects";   
+import HomeProjects from "./HomeProjects/HomeProjects";
 import Contact from "../../components/contact/Contact";
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="bg-[#fcfcfc]">
+      <div className="bg-white">
         <div className="flex items-center justify-center py-30">
           <h1 className="text-4xl md:text-9xl -mb-24 font-extralight text-[#3C3C3B] tracking-[0.2em] text-center uppercase">
             setting standards
@@ -39,7 +39,14 @@ const Home = () => {
         </div>
 
         <BigBanner images={images} loading={bannerLoading} />
+        <HomeBuilding />
 
+        <HomeVideo videoId="_vtV8atti84" />
+
+        <HomeProjects
+          projects={homeProjectsData?.data}
+          loading={homeProjectsLoading}
+        />
         {miniAboutLoading || !miniAbout ? (
           <MiniAboutSkeleton />
         ) : (
@@ -50,24 +57,13 @@ const Home = () => {
             metrics={miniAbout.metrics}
           />
         )}
-
-        <HomeVideo videoId="_vtV8atti84" />
-
-        <HomeBuilding />
-
-        <div className="-mt-82 z-50">
+        <div className="">
           <HomeMap
             google_map_embed={settingData?.data?.[0]?.google_map_embed}
             loading={settingDataLoading}
           />
         </div>
-        <HomeProjects
-          projects={homeProjectsData?.data}
-          loading={homeProjectsLoading}
-        />
-
-        <Contact/>
-
+        <Contact />
       </div>
     </>
   );

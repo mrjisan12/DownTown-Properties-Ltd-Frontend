@@ -13,7 +13,7 @@ const HomeProjects = ({ projects = [], loading }) => {
 
   if (loading) {
     return (
-      <section className="h-screen bg-black flex items-center justify-center text-white font-light tracking-widest">
+      <section className="h-screen  bg-black flex items-center justify-center text-white font-light tracking-widest">
         LOADING PROJECTS...
       </section>
     );

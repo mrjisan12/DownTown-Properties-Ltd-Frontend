@@ -45,6 +45,16 @@ bun run build
 bun run preview
 
 
+# Here using this packages
+bun add framer-motion
+bun add lucide-react
+bun add @reduxjs/toolkit react-redux
+bun add swiper
+
+# Here for npm user
+npm install framer-motion lucide-react @reduxjs/toolkit react-redux swiper
+
+
 
 DownTown-Properties-Ltd-Frontend/
 ├── src/

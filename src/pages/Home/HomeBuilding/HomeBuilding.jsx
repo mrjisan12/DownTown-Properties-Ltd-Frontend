@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-   
   motion,
   useScroll,
   useTransform,
@@ -17,13 +16,13 @@ const HomeBuilding = () => {
   const fullText = "Witness as We Transform Your Land into a Landmark";
 
   const pairData = [
-    { metric: "Total Area Built", value: "10M+", color: "#DAA520" }, // Primary Gold
+    { metric: "Total Area Built", value: "10M+", color: "#DAA520" },
     { metric: "Residential Projects", value: "120+", color: "#DAA520" },
-    { metric: "Commercial Spaces", value: "80+", color: "#71717a" }, // Secondary Gray
+    { metric: "Commercial Spaces", value: "80+", color: "#71717a" },
     { metric: "Years of Excellence", value: "25+", color: "#71717a" },
   ];
 
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -35,20 +34,19 @@ const HomeBuilding = () => {
     damping: 30,
   });
 
-  // Reveal Animations
   const clipPath = useTransform(
     smoothProgress,
     [0, 0.4, 0.7],
     [
-      "inset(100% 0% 0% 0% round 30px)",
-      "inset(0% 0% 0% 0% round 30px)",
-      "inset(0% 0% 0% 0% round 30px)",
+      "inset(100% 0% 0% 0% round 20px)",
+      "inset(0% 0% 0% 0% round 20px)",
+      "inset(0% 0% 0% 0% round 20px)",
     ]
   );
 
-  const translateY = useTransform(smoothProgress, [0, 0.6], [100, -80]);
-  const scale = useTransform(smoothProgress, [0, 0.4], [0.9, 1.05]);
-  const brightness = useTransform(smoothProgress, [0, 0.4], [0.6, 1]);
+  const translateY = useTransform(smoothProgress, [0, 0.6], [50, -40]);
+  const scale = useTransform(smoothProgress, [0, 0.4], [0.95, 1.05]);
+  const brightness = useTransform(smoothProgress, [0, 0.4], [0.8, 1]);
 
   const [counters, setCounters] = useState({
     "10M+": 0,
@@ -97,18 +95,18 @@ const HomeBuilding = () => {
   return (
     <section
       ref={containerRef}
-      className="w-full z-10  text-black py-32 overflow-hidden relative"
+      className="w-full z-10 text-black py-16 md:py-32 overflow-hidden relative"
     >
       {/* Dynamic Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-125 h-125 bg-yellow-600/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-zinc-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-1/4 w-64 md:w-125 h-64 md:h-125 bg-yellow-600/20 blur-[80px] md:blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-1/4 w-64 md:w-125 h-64 md:h-125 bg-zinc-600/20 blur-[80px] md:blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-400 mx-auto px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[1.1] mb-6">
+        <div className="text-center mb-10 md:mb-16">
+          <motion.h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-tight mb-4 min-h-[3em] md:min-h-fit">
             {displayedText}
             {!typingComplete && (
               <span className="animate-pulse text-yellow-500">|</span>
@@ -116,19 +114,37 @@ const HomeBuilding = () => {
           </motion.h1>
           {typingComplete && (
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-zinc-400 text-xl font-light tracking-wide"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-zinc-500 text-sm md:text-xl font-light tracking-widest"
             >
               ESTABLISHED 1998 — ARCHITECTURAL MARVELS
             </motion.p>
           )}
         </div>
 
-        {/* MAIN GRID: Pushing content to edges */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-4 items-center">
-          {/* LEFT SIDE: Far Left */}
-          <div className="flex flex-col gap-32 order-2 lg:order-1 items-start">
+        {/* MAIN GRID */}
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr_1fr] gap-8 md:gap-12 items-center">
+          
+          {/* CENTER: The Building (Order 1 on mobile) */}
+          <div className="w-full order-1 lg:order-2 flex justify-center items-center px-4 md:px-0">
+            <motion.div
+              style={{ clipPath, y: translateY, scale, brightness }}
+              className="relative w-full max-w-lg lg:max-w-5xl mx-auto"
+            >
+              <motion.img
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                src="/src/assets/ShantaAssets/bigBuilding.webp"
+                alt="Architecture"
+                className="w-full aspect-[4/5] md:aspect-auto object-cover rounded-2xl shadow-2xl"
+              />
+            </motion.div>
+          </div>
+
+          {/* METRICS CONTAINER (Order 2 on mobile) */}
+          {/* Using a grid of 2 columns on mobile, single column on desktop */}
+          <div className="order-2 lg:order-1 w-full grid grid-cols-2 lg:grid-cols-1 gap-8 md:gap-24 lg:gap-32">
             {pairData.slice(0, 2).map((item, idx) => (
               <EnhancedMetricItem
                 key={idx}
@@ -141,29 +157,7 @@ const HomeBuilding = () => {
             ))}
           </div>
 
-          {/* CENTER: The Building */}
-          <div className="order-1 lg:order-2  flex justify-center items-center">
-            <motion.div
-              style={{ clipPath, y: translateY, scale, brightness }}
-              className="relative w-full"
-            >
-              <motion.img
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                src="/src/assets/ShantaAssets/bigBuilding.webp"
-                alt="Architecture"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute via-transparent to-transparent" />
-            </motion.div>
-          </div>
-
-          {/* RIGHT SIDE: Far Right */}
-          <div className="flex flex-col gap-32 order-3 items-end">
+          <div className="order-3 w-full grid grid-cols-2 lg:grid-cols-1 gap-8 md:gap-24 lg:gap-32">
             {pairData.slice(2, 4).map((item, idx) => (
               <EnhancedMetricItem
                 key={idx}
@@ -181,40 +175,37 @@ const HomeBuilding = () => {
   );
 };
 
-const EnhancedMetricItem = ({
-  item,
-  isVisible,
-  index,
-  align,
-  counterValue,
-}) => (
-  <motion.div
-    initial={{ opacity: 0, x: align === "text-left" ? -50 : 50 }}
-    animate={isVisible ? { opacity: 1, x: 0 } : {}}
-    transition={{ duration: 1, delay: 0.2 * index }}
-    className={`${align} group`}
-  >
-    <div className="relative inline-block">
-      <h2
-        className="text-8xl lg:text-9xl font-black tracking-tighter"
-        style={{ color: item.color }}
-      >
-        {counterValue}
-        {item.value.includes("+") ? "+" : ""}
-      </h2>
-      <motion.div
-        className={`h-1 w-full bg-current mt-2 origin-${
-          align === "text-left" ? "left" : "right"
-        }`}
-        initial={{ scaleX: 0 }}
-        animate={isVisible ? { scaleX: 1 } : {}}
-        transition={{ delay: 1 + index * 0.1, duration: 0.8 }}
-      />
-    </div>
-    <p className="mt-4 text-xs font-bold tracking-[0.5em] uppercase text-zinc-500 group-hover:text-white transition-colors">
-      {item.metric}
-    </p>
-  </motion.div>
-);
+const EnhancedMetricItem = ({ item, isVisible, index, align, counterValue }) => {
+  // Logic to determine alignment on mobile vs desktop
+  // On mobile, we usually center them within their grid cells
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: 0.1 * index }}
+      className={`flex flex-col ${align === "text-left" ? "lg:items-start" : "lg:items-end"} items-center text-center lg:${align} group`}
+    >
+      <div className="relative inline-block">
+        <h2
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl font-black tracking-tighter leading-none"
+          style={{ color: item.color }}
+        >
+          {counterValue}{item.value.includes("+") ? "+" : ""}
+        </h2>
+        <motion.div
+          className={`h-0.5 md:h-1 w-full bg-current mt-1 md:mt-2 origin-center lg:origin-${
+            align === "text-left" ? "left" : "right"
+          }`}
+          initial={{ scaleX: 0 }}
+          animate={isVisible ? { scaleX: 1 } : {}}
+          transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
+        />
+      </div>
+      <p className="mt-3 md:mt-4 text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.5em] uppercase text-zinc-500">
+        {item.metric}
+      </p>
+    </motion.div>
+  );
+};
 
 export default HomeBuilding;
