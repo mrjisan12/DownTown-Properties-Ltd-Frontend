@@ -7,6 +7,6 @@ export const baseApi = createApi({
 
     credentials: "include",
   }),
-  tagTypes: ["HomeApi"],
+  tagTypes: ["HomeApi","ProjectApi"],
   endpoints: () => ({}),
 });

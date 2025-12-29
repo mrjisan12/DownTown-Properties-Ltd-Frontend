@@ -5,6 +5,7 @@ import Home from '../pages/Home/Home';
 import App from '../App';
 import About from "@/pages/About/About";
 import Projects from "@/pages/Projects/Projects";
+import DetailProject from "@/pages/Projects/DetailProject/DetailProject";
 
 
 export const router = createBrowserRouter([
@@ -28,6 +29,11 @@ export const router = createBrowserRouter([
                 index: true,
                 path:"/projects",
                 Component: Projects ,
+            },
+            {
+                index: true,
+                path:"/project/:id",
+                Component: DetailProject ,
             },
           
       ]

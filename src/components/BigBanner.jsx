@@ -16,9 +16,7 @@ const DEFAULT_IMAGES = [
 const BigBanner = ({ images = [], loading = false }) => {
   const containerRef = useRef(null);
 
-  // Use default images if loading, otherwise use provided images
   const displayImages = loading ? DEFAULT_IMAGES : (images.length > 0 ? images : DEFAULT_IMAGES);
-
   const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
   const { scrollYProgress } = useScroll({
@@ -32,27 +30,33 @@ const BigBanner = ({ images = [], loading = false }) => {
     restDelta: 0.001
   });
 
-  /* ------------------ Scroll Animations ------------------ */
+  /* ------------------ Responsive Scroll Animations ------------------ */
   
-  // Banner Expansion
+  // On Mobile, we want less 'inset' so the image stays visible
+  // Desktop: 15% side inset | Mobile: 5% side inset
   const clipPath = useTransform(
     smoothProgress,
-    [0, 0.4],
-    ["inset(12% 15% 12% 15% round 40px)", "inset(0% 0% 0% 0% round 0px)"]
+    [0, 0.45],
+    [
+      "inset(10% 5% 10% 5% round 20px)", // Mobile-friendly starting state
+      "inset(0% 0% 0% 0% round 0px)"
+    ]
   );
 
-  // Subtle Image Parallax
+  // We switch values for desktop using a media query approach in the transform would be complex,
+  // so we use CSS to handle the container's responsive scaling.
   const imageScale = useTransform(smoothProgress, [0, 1], [1.2, 1.05]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[160vh] bg-neutral-50">
+    <div ref={containerRef} className="relative w-full h-[140vh] md:h-[180vh] bg-neutral-50">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         <motion.div
           style={{ 
             clipPath: clipPath,
             willChange: "clip-path"
           }}
-          className="relative w-full h-full overflow-hidden bg-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)]"
+          // The lg: clipPath override in CSS if you want to be specific for desktop
+          className="relative w-full h-full overflow-hidden bg-white shadow-2xl"
         >
           <Carousel
             plugins={[autoplay.current]}
@@ -70,32 +74,39 @@ const BigBanner = ({ images = [], loading = false }) => {
                       style={{ scale: imageScale }}
                       src={img.url || img}
                       alt={`Slide ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      // Use h-[100dvh] for better mobile viewport handling
+                      className="w-full h-[100dvh] object-cover"
                     />
-                    <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/10" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
           </Carousel>
 
-          <div className="absolute bottom-12 left-12 z-40 flex items-center gap-4">
-            <div className="h-0.5 w-24 bg-white/30 overflow-hidden">
+          {/* Bottom Indicator Section - Optimized for Mobile */}
+          <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 z-40 flex items-center gap-3 md:gap-4">
+            <div className="h-[1px] md:h-0.5 w-16 md:w-24 bg-white/30 overflow-hidden">
               <motion.div 
                 className="h-full bg-white origin-left"
                 style={{ scaleX: smoothProgress }}
               />
             </div>
-            <span className="text-white text-[10px] font-bold tracking-widest uppercase">
-              Explore
+            <span className="text-white text-[8px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-widest uppercase">
+              Scroll to Explore
             </span>
+          </div>
+
+          {/* Floating Branding or Badge (Optional for extra "Nice" feel) */}
+          <div className="absolute top-8 right-6 md:top-12 md:right-12 z-40">
+             <span className="text-white/60 text-[8px] md:text-[10px] font-medium border border-white/20 px-3 py-1 rounded-full backdrop-blur-md">
+               PREMIUM REALTY
+             </span>
           </div>
         </motion.div>
       </div>
     </div>
   );
 };
-
-
 
 export default BigBanner;

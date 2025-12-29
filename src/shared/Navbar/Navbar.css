@@ -1,28 +1,44 @@
-/* Custom Easing for a "Premium" feel */
-.ease-quintic {
-  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+/* Fully Transparent Setup */
+
+/* Ensure the body content starts at the very top of the screen */
+body {
+  padding-top: 0 !important;
+  margin: 0;
 }
 
-/* Glassmorphism for the background of the nav */
+/* Remove any potential global blur effects from nav */
 nav {
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: transparent !important;
 }
 
-/* Subtle link underline animation */
+/* Premium text shadow to ensure visibility on light backgrounds without using a box background */
+.drop-shadow-lg {
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.4)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Navigation Link hover logic for the sidebar */
+.nav-link-custom {
+  position: relative;
+}
+
 .nav-link-custom::after {
   content: '';
-  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 0;
   height: 2px;
-  background: var(--primary);
-  transition: width .3s;
+  background: hsl(var(--primary));
+  transition: width 0.4s ease;
 }
 
 .nav-link-custom:hover::after {
   width: 100%;
 }
 
-/* Clean up body padding so content isn't hidden */
-body {
-  padding-top: 0; /* Handled by fixed positioning and margin on main content */
+/* Smooth Sidebar Transition Easing */
+.ease-premium {
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }

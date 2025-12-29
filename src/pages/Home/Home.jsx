@@ -2,7 +2,6 @@ import React from "react";
 import BigBanner from "@/components/BigBanner";
 import {
   useGetHomeBannerQuery,
-  useGetHomeProjectsQuery,
   useGetMiniAboutQuery,
   useGetSettingsQuery,
 } from "@/redux/api/homeApi";
@@ -13,6 +12,7 @@ import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import HomeProjects from "./HomeProjects/HomeProjects";
 import Contact from "../../components/contact/Contact";
+import { useGetAllProjectsQuery } from "@/redux/api/projectApi";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -24,7 +24,7 @@ const Home = () => {
   const { data: settingData, isLoading: settingDataLoading } =
     useGetSettingsQuery();
   const { data: homeProjectsData, isLoading: homeProjectsLoading } =
-    useGetHomeProjectsQuery();
+    useGetAllProjectsQuery();
   const images = bannerData?.data?.map((item) => item.image);
 
   const miniAbout = miniAboutApi?.data?.[0];
@@ -42,11 +42,6 @@ const Home = () => {
         <HomeBuilding />
 
         <HomeVideo videoId="_vtV8atti84" />
-
-        <HomeProjects
-          projects={homeProjectsData?.data}
-          loading={homeProjectsLoading}
-        />
         {miniAboutLoading || !miniAbout ? (
           <MiniAboutSkeleton />
         ) : (
@@ -57,6 +52,11 @@ const Home = () => {
             metrics={miniAbout.metrics}
           />
         )}
+        <HomeProjects
+          projects={homeProjectsData?.data}
+          loading={homeProjectsLoading}
+        />
+
         <div className="">
           <HomeMap
             google_map_embed={settingData?.data?.[0]?.google_map_embed}
