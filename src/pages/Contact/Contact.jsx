@@ -1,5 +1,5 @@
-import ContactSection from '@/components/ContactSection/ContactSection';
-import GetInTouchSection from '@/components/GetInTouchSection/GetInTouchSection';
+import ContactSection from '@/components/contactSection/contactSection';
+import GetInTouchSection from '@/components/getInTouchSection/getInTouchSection';
 import React from 'react'
 import HomeMap from '../Home/HomeMap/HomeMap';
 import { useGetSettingsQuery } from '@/redux/api/homeApi';

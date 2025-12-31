@@ -3,6 +3,7 @@ import ProjectBanner from "./ProjectBanner/ProjectBanner";
 import { useGetHomeProjectsQuery } from "@/redux/api/homeApi";
 import FilterSection from "./FilterSection/FilterSection";
 import MainProject from "./MainProject/MainProject";
+import ProjectSkeletons from "@/components/skeletons/projectSkeletons";
 
 const Projects = () => {
   const { data, isLoading } = useGetHomeProjectsQuery();
@@ -32,7 +33,7 @@ const Projects = () => {
   }, [projects, filters]);
 
   if (isLoading) {
-    return <div className="text-center py-20">Loading projects...</div>;
+    return <ProjectSkeletons />
   }
 
   return (

@@ -11,7 +11,7 @@ import HomeBuilding from "./HomeBuilding/HomeBuilding";
 import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import HomeProjects from "./HomeProjects/HomeProjects";
-import ContactSection from "../../components/ContactSection/ContactSection";
+import ContactSection from "../../components/contactSection/contactSection";
 import { useGetAllProjectsQuery } from "@/redux/api/projectApi";
 
 const Home = () => {

@@ -17,10 +17,10 @@ const MainProject = ({ projects }) => {
             {/* Seamless Image Container - No boundaries */}
             <div
               onClick={() => navigate(`/project/${project.id}`)}
-              className="relative h-[400px] lg:h-[500px] overflow-hidden"
+              className="relative h-100 lg:h-125 overflow-hidden"
             >
               {/* Image with soft fade-out effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/10 z-10" />
+              <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-white/10 z-10" />
 
               <img
                 src={project.image}
@@ -41,7 +41,7 @@ const MainProject = ({ projects }) => {
               {/* Subtle gradient overlay at bottom for seamless transition */}
               <div
                 className="absolute bottom-0 left-0 right-0 h-16 
-                            bg-gradient-to-t from-white via-white/90 to-transparent z-10"
+                            bg-linear-to-t from-white via-white/90 to-transparent z-10"
               />
             </div>
 

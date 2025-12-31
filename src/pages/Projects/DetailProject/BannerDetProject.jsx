@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 const BannerDetProject = ({ banner, title, status }) => {
   const [loaded, setLoaded] = useState(false);
   const { scrollY } = useScroll();
-  
+
   // Parallax effects
   const y = useTransform(scrollY, [0, 300], [0, 100]);
   const scale = useTransform(scrollY, [0, 300], [1, 1.1]);
@@ -14,23 +14,23 @@ const BannerDetProject = ({ banner, title, status }) => {
   const titleChars = title.split("");
 
   return (
-    <motion.section 
+    <motion.section
       className="relative w-screen h-screen overflow-hidden -mx-[calc((100vw-100%)/2)]"
       style={{ opacity }}
     >
-      {/* Dynamic gradient overlay */}
+      {/* Dynamic linear overlay */}
       <div className="absolute inset-0 z-20 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-        
-        {/* Animated gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-600/10 to-pink-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-black/30 via-transparent to-black/30"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-linear-to-t from-black/90 via-black/50 to-transparent"></div>
+
+        {/* Animated linear orbs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-linear-to-r from-purple-600/10 to-pink-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-linear-to-r from-blue-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       {/* Background Image with Parallax */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 w-full h-full"
         style={{ y, scale }}
       >
@@ -38,20 +38,20 @@ const BannerDetProject = ({ banner, title, status }) => {
           src={banner}
           alt={title}
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
-            loaded ? 'opacity-100 blur-0' : 'opacity-0 blur-lg'
+            loaded ? "opacity-100 blur-0" : "opacity-0 blur-lg"
           }`}
           onLoad={() => setLoaded(true)}
           style={{ objectPosition: "center 35%" }}
         />
-        
+
         {/* Loading shimmer effect */}
         {!loaded && (
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 animate-shimmer bg-[length:200%_100%]"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 animate-shimmer bg-size-[200%_100%]"></div>
         )}
       </motion.div>
 
       {/* Noise texture overlay */}
-      <div 
+      <div
         className="absolute inset-0 z-10 opacity-5 mix-blend-overlay pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
@@ -77,7 +77,7 @@ const BannerDetProject = ({ banner, title, status }) => {
               {status}
             </span>
             <motion.div
-              className="w-12 h-px bg-gradient-to-r from-white/50 to-transparent"
+              className="w-12 h-px bg-linear-to-r from-white/50 to-transparent"
               animate={{ width: ["0%", "100%", "0%"] }}
               transition={{ duration: 3, repeat: Infinity }}
             />
@@ -91,27 +91,27 @@ const BannerDetProject = ({ banner, title, status }) => {
               {titleChars.map((char, index) => (
                 <motion.span
                   key={index}
-                  initial={{ 
-                    opacity: 0, 
+                  initial={{
+                    opacity: 0,
                     y: 50,
-                    rotateX: 90 
+                    rotateX: 90,
                   }}
-                  animate={{ 
-                    opacity: 1, 
+                  animate={{
+                    opacity: 1,
                     y: 0,
-                    rotateX: 0 
+                    rotateX: 0,
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 0.5,
                     delay: index * 0.05,
-                    ease: "backOut"
+                    ease: "backOut",
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.2,
                     y: -10,
-                    textShadow: "0 10px 20px rgba(0,0,0,0.5)"
+                    textShadow: "0 10px 20px rgba(0,0,0,0.5)",
                   }}
-                  className="inline-block cursor-default hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-white hover:via-gray-300 hover:to-white transition-all duration-300"
+                  className="inline-block cursor-default hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-white hover:via-gray-300 hover:to-white transition-all duration-300"
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
@@ -135,7 +135,7 @@ const BannerDetProject = ({ banner, title, status }) => {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1.2, delay: 0.8, ease: "circOut" }}
-          className="h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mt-12 md:mt-16 max-w-4xl mx-auto w-full"
+          className="h-px bg-linear-to-r from-transparent via-white/50 to-transparent mt-12 md:mt-16 max-w-4xl mx-auto w-full"
         />
 
         {/* Scroll Indicator */}
@@ -161,10 +161,10 @@ const BannerDetProject = ({ banner, title, status }) => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-8 left-8 w-16 h-16 border-t border-l border-white/20 z-30"></div>
+      {/* <div className="absolute top-8 left-8 w-16 h-16 border-t border-l border-white/20 z-30"></div>
       <div className="absolute top-8 right-8 w-16 h-16 border-t border-r border-white/20 z-30"></div>
       <div className="absolute bottom-8 left-8 w-16 h-16 border-b border-l border-white/20 z-30"></div>
-      <div className="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-white/20 z-30"></div>
+      <div className="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-white/20 z-30"></div> */}
 
       {/* Floating Particles */}
       <div className="absolute inset-0 z-10 pointer-events-none">

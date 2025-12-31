@@ -17,6 +17,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.26",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -25,7 +26,8 @@
     "react-router-dom": "^7.11.0",
     "swiper": "^12.0.3",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "yet-another-react-lightbox": "^3.28.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.5",
