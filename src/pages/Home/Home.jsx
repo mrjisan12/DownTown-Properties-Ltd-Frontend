@@ -2,17 +2,21 @@ import React from "react";
 import BigBanner from "@/components/BigBanner";
 import {
   useGetHomeBannerQuery,
+  useGetHomeBuildingQuery,
   useGetMiniAboutQuery,
   useGetSettingsQuery,
 } from "@/redux/api/homeApi";
 import HomeVideo from "./HomeVideo/HomeVideo";
-import MiniAbout from "./MiniAbout/MiniAbout";
+import MiniAbout from "./HomeMiniAbout/HomeMiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
-import HomeMap from "./HomeMap/HomeMap";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import HomeProjects from "./HomeProjects/HomeProjects";
 import ContactSection from "../../components/contactSection/contactSection";
 import { useGetAllProjectsQuery } from "@/redux/api/projectApi";
+import CommonMap from "../../components/commonMap/commonMap";
+import BigBannerSkeleton from "@/components/skeletons/bigBannerSkeleton";
+import HomeBuildingSkeleton from "@/components/skeletons/homeBuildingSkeleton";
+import HomeMiniAbout from "./HomeMiniAbout/HomeMiniAbout";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -23,8 +27,13 @@ const Home = () => {
 
   const { data: settingData, isLoading: settingDataLoading } =
     useGetSettingsQuery();
+
+  const { data: homeBuildingData, isLoading: homeBuildingDataLoading } =
+    useGetHomeBuildingQuery();
+
   const { data: homeProjectsData, isLoading: homeProjectsLoading } =
     useGetAllProjectsQuery();
+
   const images = bannerData?.data?.map((item) => item.image);
 
   const miniAbout = miniAboutApi?.data?.[0];
@@ -37,32 +46,48 @@ const Home = () => {
             setting standards
           </h1>
         </div>
+        {bannerLoading ? (
+          <BigBannerSkeleton />
+        ) : (
+          <BigBanner images={images} loading={bannerLoading} />
+        )}
 
-        <BigBanner images={images} loading={bannerLoading} />
-        <HomeBuilding />
+        {homeBuildingDataLoading || !homeBuildingData ? (
+          <HomeBuildingSkeleton />
+        ) : (
+          <HomeBuilding
+            loading={homeBuildingDataLoading}
+            data={homeBuildingData?.data?.[0]}
+          />
+        )}
 
-        <HomeVideo videoId="_vtV8atti84" />
+        <HomeVideo
+          videoId={homeBuildingData?.data?.[0]?.videoID || "_vtV8atti84"}
+        />
+
         {miniAboutLoading || !miniAbout ? (
           <MiniAboutSkeleton />
         ) : (
-          <MiniAbout
+          <HomeMiniAbout
             title={miniAbout.title}
             description={miniAbout.description}
             image={miniAbout.image}
             metrics={miniAbout.metrics}
           />
         )}
+
         <HomeProjects
           projects={homeProjectsData?.data}
           loading={homeProjectsLoading}
         />
 
         <div className="">
-          <HomeMap
+          <CommonMap
             google_map_embed={settingData?.data?.[0]?.google_map_embed}
             loading={settingDataLoading}
           />
         </div>
+
         <ContactSection />
       </div>
     </>

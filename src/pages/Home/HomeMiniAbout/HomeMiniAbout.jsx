@@ -1,9 +1,16 @@
 import React, { useRef } from "react";
- 
+
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
-const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) => {
+const HomeMiniAbout = ({
+  title,
+  description,
+  image,
+  metrics = [],
+  reverse = false,
+}) => {
   const containerRef = useRef(null);
   const imageRef = useRef(null);
 
@@ -97,7 +104,7 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
             }`}
           >
             {/* Outer glow container */}
-            <div className="relative p-1 rounded-3xl bg-linear-to-br from-primary/30 via-secondary/30 to-accent/30">
+            <div className="relative p-1 rounded-3xl ">
               {/* Main image with drop effect */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -111,7 +118,7 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
                   },
                 }}
                 viewport={{ once: true, amount: 0.5 }}
-                className="relative overflow-hidden rounded-2xl shadow-2xl"
+                className="relative overflow-hidden rounded-2xl "
               >
                 <img
                   src={image}
@@ -120,10 +127,10 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
+                {/* <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" /> */}
 
                 {/* Reflective shine effect */}
-                <div className="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent" />
+                {/* <div className="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent" /> */}
               </motion.div>
 
               {/* Animated border */}
@@ -138,15 +145,15 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
                 }}
                 className="absolute inset-0 rounded-3xl opacity-50"
                 style={{
-                  background:
-                    "linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary))",
+                  // background:
+                  //   "linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary))",
                   backgroundSize: "300% 300%",
                 }}
               />
             </div>
 
             {/* Floating decorative badge */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
@@ -167,7 +174,7 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
                   <div className="text-xs text-foreground/70 mt-1">Premium</div>
                 </div>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
 
           {/* Text Content */}
@@ -261,7 +268,9 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
                 whileTap={{ scale: 0.95 }}
                 className="group text-white inline-flex items-center gap-3 px-8 py-4 rounded-full bg-linear-to-r from-primary to-primary/80 font-semibold hover:shadow-xl transition-all duration-300"
               >
-                <span>Discover More</span>
+                <Link to="/about">
+                  <span>Discover More</span>
+                </Link>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </motion.button>
 
@@ -325,4 +334,4 @@ const MiniAbout = ({ title, description, image, metrics = [],reverse = false }) 
   );
 };
 
-export default MiniAbout;
+export default HomeMiniAbout;

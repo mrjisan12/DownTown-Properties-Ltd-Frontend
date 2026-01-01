@@ -12,6 +12,7 @@ import {
   Youtube,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../../assets/dwntwn.png";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -110,7 +111,7 @@ const Navbar = ({ socialLinks = [] }) => {
           >
             <NavLink to="/">
               <img
-                src="/src/assets/dwntwn.png"
+                src={logo}
                 alt="Logo"
                 // Added brightness filter if logo is white and needs to be dark on scrolled navbar
                 className={`h-10 md:h-12 w-auto transition-all ${

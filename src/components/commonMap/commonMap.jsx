@@ -1,4 +1,4 @@
-const HomeMap = ({ google_map_embed, loading }) => {
+const CommonMap = ({ google_map_embed, loading }) => {
   return (
     <section
       className="relative w-full py-24 bg-center bg-cover bg-no-repeat z-50"
@@ -48,4 +48,4 @@ const HomeMap = ({ google_map_embed, loading }) => {
   );
 };
 
-export default HomeMap;
+export default CommonMap;

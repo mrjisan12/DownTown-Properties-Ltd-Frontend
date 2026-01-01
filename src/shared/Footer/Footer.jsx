@@ -120,7 +120,7 @@ const Footer = ({ socialLinks = [] }) => {
               { icon: <Mail size={16} />, text: footerData.primary_email },
             ].map((item, idx) => (
               <p key={idx} className="flex items-start gap-3 group">
-                <span className="text-blue-500 group-hover:text-blue-400 transition-colors">
+                <span className="text-white group-hover:text-blue-400 transition-colors">
                   {item.icon}
                 </span>
                 {item.text}

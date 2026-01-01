@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from "react";
-import ProjectBanner from "./ProjectBanner/ProjectBanner";
+import ProjectBanner from "../../components/commonBanner/commonBanner";
 import { useGetHomeProjectsQuery } from "@/redux/api/homeApi";
 import FilterSection from "./FilterSection/FilterSection";
 import MainProject from "./MainProject/MainProject";
 import ProjectSkeletons from "@/components/skeletons/projectSkeletons";
+import CommonBanner from "../../components/commonBanner/commonBanner";
+import projectImg from "../../assets/BannerImages/Project.jpeg";
 
 const Projects = () => {
   const { data, isLoading } = useGetHomeProjectsQuery();
@@ -33,12 +35,17 @@ const Projects = () => {
   }, [projects, filters]);
 
   if (isLoading) {
-    return <ProjectSkeletons />
+    return <ProjectSkeletons />;
   }
 
   return (
     <>
-      <ProjectBanner />
+      <CommonBanner
+        backgroundImage={projectImg}
+        subtitle="Our Portfolio"
+        title="Architectural"
+        highlight="Excellence"
+      />
       <FilterSection
         filters={filters}
         setFilters={setFilters}

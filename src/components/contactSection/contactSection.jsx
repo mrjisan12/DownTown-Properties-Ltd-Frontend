@@ -1,116 +1,152 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 
-const ContactSection = () => {
-  const [leftRatio, setLeftRatio] = useState("60%");
-  const [rightRatio, setRightRatio] = useState("40%");
+const ContactSection = ({ settings, socials }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const sectionRef = useRef(null);
 
-  // Detect scroll or hover
   useEffect(() => {
-    const handleScroll = () => {
-      const section = document.getElementById("contact-section");
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
 
-      // When section is fully visible (top near viewport top)
-      if (rect.top >= 0 && rect.top < windowHeight / 2) {
-        setLeftRatio("60%");
-        setRightRatio("40%");
-      } else {
-        setLeftRatio("70%"); // left bigger
-        setRightRatio("30%"); // right smaller
-      }
+    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      // Calculate movement from center
+      const x = (clientX - window.innerWidth / 2) / 50;
+      const y = (clientY - window.innerHeight / 2) / 50;
+      setMousePosition({ x, y });
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
+
+  const data = settings?.data?.[0];
+  const sortedSocials = useMemo(() => {
+    if (!socials?.data) return [];
+    return [...socials.data].sort((a, b) => Number(a.position) - Number(b.position));
+  }, [socials]);
 
   return (
     <section
-      id="contact-section"
-      className="relative w-full py-24 bg-[#f4f2ef]"
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex items-center justify-center py-20 overflow-hidden bg-[#faf9f6]"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex gap-16 items-stretch">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 z-0">
+        <div 
+          className="absolute top-[-10%] left-[-5%] w-125 h-125  rounded-full blur-[120px] opacity-20 transition-transform duration-1000 ease-out"
+          style={{ 
+            background: '#978c21',
+            transform: `translate(${mousePosition.x * -1.5}px, ${mousePosition.y * -1.5}px)` 
+          }}
+        />
+        <div 
+          className="absolute bottom-[-10%] right-[-5%] w-150 h-150  rounded-full blur-[150px] opacity-20 transition-transform duration-1000 ease-out"
+          style={{ 
+            background: '#b3a732',
+            transform: `translate(${mousePosition.x * 1.2}px, ${mousePosition.y * 1.2}px)` 
+          }}
+        />
+      </div>
 
-          {/* LEFT SIDE */}
-          <div
-            className="flex flex-col justify-between transition-all duration-500"
-            style={{ width: leftRatio }}
-          >
-            {/* Heading */}
+      <div className="w-full mx-20 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          
+          {/* --- LEFT SIDE: CONTENT --- */}
+          <div className={`space-y-10 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
             <div>
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 tracking-wide mb-12">
-                LET&apos;S CONNECT
+              <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.2em] uppercase text-[#978c21] bg-[#978c21]/10 rounded-full">
+                Get In Touch
+              </span>
+              <h2 className="text-6xl md:text-8xl font-light leading-tight text-gray-900 tracking-tighter">
+                Let’s start <br /> 
+                <span className="font-serif italic text-[#978c21]">something.</span>
               </h2>
             </div>
 
-            {/* Cards */}
-            <div className="flex flex-col gap-0 flex-1">
-              
-              {/* Clients */}
-              <div className="relative p-10 shadow-xl border-l-4 border-[#978c21] flex-1 bg-[#f8f6ee]">
-                <Link
-                  to="/clients"
-                  className="absolute top-6 right-6 text-[#978c21] text-5xl font-bold transform -rotate-45 hover:translate-x-1 hover:-translate-y-1 transition-all"
-                  aria-label="Go to Clients page"
+            <div className="grid gap-6">
+              {[
+                { label: "Email Us", val: data?.primary_email || "hello@luxury.com", icon: "📧" },
+                { label: "Call Us", val: data?.primary_phone || "+1 234 567 890", icon: "📱" },
+                { label: "Visit Us", val: data?.address || "123 Design St. New York", icon: "📍" }
+              ].map((item, i) => (
+                <div 
+                  key={i}
+                  className="group flex items-center p-6 bg-white/40 backdrop-blur-md border border-white/60 rounded-3xl transition-all hover:bg-white/80 hover:shadow-xl hover:-translate-y-1"
                 >
-                  →
-                </Link>
+                  <div className="w-12 h-12 flex items-center justify-center bg-[#978c21] text-white rounded-2xl text-xl mr-6 shadow-lg shadow-[#978c21]/20">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-1">{item.label}</p>
+                    <p className="text-lg font-medium text-gray-800">{item.val}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-                <h3 className="text-2xl font-semibold text-[#978c21] mb-4">
-                  Clients
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Discover exquisite apartments, commercial spaces, and unmatched
-                  luxury with Shanta Holdings Ltd. to turn your dreams into a
-                  reality.
-                </p>
+            {/* Socials */}
+            <div className="flex items-center gap-6">
+              <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Follow:</p>
+              <div className="flex gap-4">
+                {sortedSocials.map((social) => (
+                  <a 
+                    key={social.id} 
+                    href={social.url} 
+                    className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-900 text-white hover:bg-[#978c21] hover:scale-110 transition-all duration-300"
+                  >
+                    <img src={social.icon} alt="" className="w-5 h-5 invert group-hover:invert-0" />
+                  </a>
+                ))}
               </div>
-
-              {/* Separation line */}
-              <div className="border-t border-gray-300"></div>
-
-              {/* Landowners */}
-              <div className="relative p-10 shadow-xl border-l-4 border-[#978c21] flex-1 bg-[#f6f4ec]">
-                <Link
-                  to="/landowners"
-                  className="absolute top-6 right-6 text-[#978c21] text-5xl font-bold transform -rotate-45 hover:translate-x-1 hover:-translate-y-1 transition-all"
-                  aria-label="Go to Landowners page"
-                >
-                  →
-                </Link>
-
-                <h3 className="text-2xl font-semibold text-[#978c21] mb-4">
-                  Landowners
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Share your land with Shanta Holdings and be a part of the
-                  architectural splendor. Fill out the form to explore this
-                  partnership.
-                </p>
-              </div>
-
             </div>
           </div>
 
-          {/* RIGHT SIDE — IMAGE */}
-          <div
-            className="relative rounded-3xl overflow-hidden shadow-[0_40px_70px_rgba(0,0,0,0.35)] transition-all duration-500"
-            style={{ width: rightRatio, minHeight: "550px" }}
-          >
-            <img
-              src="/src/assets/title/contact.webp"
-              alt="Contact"
-              className="w-full h-full object-cover scale-[1.05] contrast-110 transition-all duration-500"
-            />
-            <div className="absolute inset-0 bg-black/10"></div>
+          {/* --- RIGHT SIDE: CINEMATIC IMAGE --- */}
+          <div className={`relative group transition-all duration-1000 delay-300 transform ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
+            <div className="relative rounded-[40px] overflow-hidden aspect-4/5 shadow-2xl">
+              {/* Image with subtle zoom on hover */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-[2s] ease-out group-hover:scale-110"
+                style={{
+                  backgroundImage: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2073&q=80')",
+                  transform: `scale(1.05) translate(${mousePosition.x * 0.2}px, ${mousePosition.y * 0.2}px)`
+                }}
+              />
+              
+              {/* Overlay Gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-[#978c21]/10 mix-blend-overlay" />
+
+            </div>
+
+            {/* Decorative Elements around image */}
+            <div className="absolute -top-6 -right-6 w-32 h-32 border-[12px] border-[#978c21]/20 rounded-full animate-spin-slow" />
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-[#978c21]/5 rounded-full blur-3xl" />
           </div>
 
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 12s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };
