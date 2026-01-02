@@ -122,7 +122,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
     <section className="py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden relative">
       {/* Enhanced Custom Cursor with AI states */}
       <motion.div
-        className="fixed top-0 left-0 w-24 h-24 bg-gradient-to-br from-white/95 to-gray-100/95 mix-blend-difference rounded-full pointer-events-none z-[9999] flex items-center justify-center text-center border border-white/20 backdrop-blur-sm"
+        className="fixed top-0 left-0 w-24 h-24 bg-gradient-to-br from-white/95 to-gray-100/95 mix-blend-difference rounded-full pointer-events-none z-[50] flex items-center justify-center text-center border border-white/20 backdrop-blur-sm"
         style={{
           x: cursorX,
           y: cursorY,
@@ -377,65 +377,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
         }}
       />
 
-      {/* Performance Optimizations */}
-      <style jsx global>{`
-        @supports (backdrop-filter: blur(12px)) {
-          .cursor-blur {
-            backdrop-filter: blur(12px);
-          }
-        }
-        
-        .swiper-pagination-bullet {
-          width: 40px !important;
-          height: 3px !important;
-          border-radius: 0 !important;
-          background: #000 !important;
-          opacity: 0.2;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .swiper-pagination-bullet-active {
-          opacity: 1 !important;
-        }
-        
-        .bullet-progress {
-          width: 0%;
-          background: linear-gradient(90deg, #000, #333);
-          transition: width 0.1s linear;
-        }
-        
-        .swiper-pagination-bullet-active .bullet-progress {
-          animation: progress 5s linear forwards;
-        }
-        
-        @keyframes progress {
-          from { width: 0%; }
-          to { width: 100%; }
-        }
-        
-        .group:hover {
-          cursor: none;
-        }
-        
-        /* Optimize image rendering */
-        img {
-          image-rendering: -webkit-optimize-contrast;
-          image-rendering: crisp-edges;
-        }
-        
-        /* Smooth scrolling */
-        .swiper-wrapper {
-          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* GPU Acceleration */
-        .gpu-accelerate {
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          perspective: 1000px;
-        }
-      `}</style>
+     
     </section>
   );
 };

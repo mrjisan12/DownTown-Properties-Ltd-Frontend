@@ -291,7 +291,7 @@ const HomeMiniAbout = ({
                 <div className="grid grid-cols-3 gap-8">
                   {metrics.map((metric, index) => (
                     <div key={metric.id || index} className="text-center">
-                      <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                      <div className="text-2xl md:text-3xl font-bold bg-primary bg-clip-text text-transparent mb-2">
                         {metric.value}
                       </div>
                       <div className="text-sm text-muted-foreground uppercase tracking-wider">

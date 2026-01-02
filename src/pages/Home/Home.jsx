@@ -7,9 +7,7 @@ import {
   useGetSettingsQuery,
 } from "@/redux/api/homeApi";
 import HomeVideo from "./HomeVideo/HomeVideo";
-import MiniAbout from "./HomeMiniAbout/HomeMiniAbout";
 import HomeBuilding from "./HomeBuilding/HomeBuilding";
-import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import HomeProjects from "./HomeProjects/HomeProjects";
 import ContactSection from "../../components/contactSection/contactSection";
 import { useGetAllProjectsQuery } from "@/redux/api/projectApi";
@@ -17,6 +15,7 @@ import CommonMap from "../../components/commonMap/commonMap";
 import BigBannerSkeleton from "@/components/skeletons/bigBannerSkeleton";
 import HomeBuildingSkeleton from "@/components/skeletons/homeBuildingSkeleton";
 import HomeMiniAbout from "./HomeMiniAbout/HomeMiniAbout";
+import HomeMiniAboutSkeleton from "@/components/skeletons/homeMiniAboutSkeleton";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -66,7 +65,7 @@ const Home = () => {
         />
 
         {miniAboutLoading || !miniAbout ? (
-          <MiniAboutSkeleton />
+          <HomeMiniAboutSkeleton />
         ) : (
           <HomeMiniAbout
             title={miniAbout.title}
@@ -88,7 +87,10 @@ const Home = () => {
           />
         </div>
 
-        <ContactSection />
+        <ContactSection
+          settings={settingData}
+          loading={settingDataLoading}
+        />
       </div>
     </>
   );

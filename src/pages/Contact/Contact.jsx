@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ContactSection from "@/components/contactSection/contactSection";
 import GetInTouchSection from "@/pages/Contact/GetInTouchSection/GetInTouchSection";
 import CommonMap from "@/components/commonMap/commonMap";
@@ -9,7 +9,9 @@ import {
 import { useCreateContactMessageMutation } from "@/redux/api/contactApi";
 import CommonBanner from "@/components/commonBanner/commonBanner";
 import connectImg from "../../assets/BannerImages/connectUs.jpg";
-
+import GetInTouchSectionSkeleton from "@/components/skeletons/getInTouchSectionSkeleton";
+import ContactSectionSkeleton from "@/components/skeletons/contactSectionSkeleton";
+import MessageSuccess from "@/components/messageSuccess/messageSuccess";
 
 const Contact = () => {
   // SETTINGS
@@ -24,10 +26,11 @@ const Contact = () => {
   const [createContactMessage, { isLoading: contactLoading }] =
     useCreateContactMessageMutation();
 
+  const [showSuccess, setShowSuccess] = useState(false);
   const handleContactSubmit = async (formData) => {
     try {
       await createContactMessage(formData).unwrap();
-      alert("Message sent successfully!");
+      setShowSuccess(true);
     } catch (error) {
       console.error(error);
       alert("Failed to send message!");
@@ -44,18 +47,31 @@ const Contact = () => {
         title="Lets Connect"
         highlight="Excellence"
       />
-      <ContactSection
-        settings={settingData}
-        socials={socialLinksData}
-        loading={settingDataLoading || socialLinksLoading}
-      />
 
-      {/* CONTACT FORM */}
-      <GetInTouchSection
-        onSubmit={handleContactSubmit}
-        loading={contactLoading}
-        settings={settingData}
+      <MessageSuccess
+        show={showSuccess}
+        onClose={() => setShowSuccess(false)}
       />
+      {/* CONTACT FORM */}
+
+      {settingDataLoading || socialLinksLoading ? (
+        <ContactSectionSkeleton />
+      ) : (
+        <ContactSection
+          settings={settingData}
+          socials={socialLinksData}
+          loading={settingDataLoading || socialLinksLoading}
+        />
+      )}
+      {contactLoading || !settingData ? (
+        <GetInTouchSectionSkeleton />
+      ) : (
+        <GetInTouchSection
+          onSubmit={handleContactSubmit}
+          loading={contactLoading}
+          settings={settingData}
+        />
+      )}
 
       {/* MAP */}
       <CommonMap

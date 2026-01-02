@@ -1,4 +1,15 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { 
+  User, 
+  Mail, 
+  Phone, 
+  BookOpen, 
+  MessageSquare, 
+  Send, 
+  MapPin, 
+  ArrowRight 
+} from "lucide-react";
 
 const GetInTouchSection = ({ onSubmit, loading, settings }) => {
   const [formData, setFormData] = useState({
@@ -22,36 +33,41 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
 
   const data = settings?.data?.[0];
 
-  // Helper for input styling
-  const inputClasses = (fieldName) => `
-    w-full bg-transparent border-b-2 py-3 outline-none transition-all duration-300
-    ${focusedField === fieldName ? "border-[#978c21] text-gray-900" : "border-gray-200 text-gray-500"}
+  // Modern input styling with dynamic borders
+  const inputWrapperClasses = (fieldName) => `
+    relative group transition-all duration-300 border-b-2
+    ${focusedField === fieldName ? "border-[#978c21]" : "border-gray-200"}
   `;
 
   return (
     <section id="submit" className="relative py-24 bg-[#faf9f6] overflow-hidden">
-      {/* Decorative background text */}
-      <div className="absolute top-0 right-0 text-[15vw] font-bold text-black/[0.02] select-none leading-none">
-        INQUIRY
+      {/* Background Decorative Text */}
+      <div className="absolute top-10 right-[-5%] text-[18vw] font-black text-black/[0.03] select-none leading-none pointer-events-none uppercase">
+        Inquiry
       </div>
 
-      <div className="mx-auto px-6 relative z-10">
-        <div className="rounded-[40px]  overflow-hidden flex flex-col lg:flex-row">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
           
           {/* LEFT — FORM SIDE */}
-          <div className="lg:w-3/5 p-8 md:p-16">
+          <div className="lg:w-3/5 p-8 md:p-16 lg:p-20">
             <header className="mb-12">
-              <span className="text-[#978c21] font-bold tracking-[0.2em] text-xs uppercase mb-3 block">
-                Write to us
-              </span>
-              <h2 className="text-4xl font-serif text-gray-900">Send a Message</h2>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="h-[1px] w-8 bg-[#978c21]"></span>
+                <span className="text-[#978c21] font-bold tracking-[0.3em] text-xs uppercase">
+                  Write to us
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif text-slate-900">
+                Send a <span className="italic text-[#978c21]">Message</span>
+              </h2>
             </header>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-              {/* Name */}
-              <div className="relative">
-                <label className={`absolute transition-all duration-300 ${formData.name || focusedField === 'name' ? '-top-6 text-xs text-[#978c21] font-bold' : 'top-3 text-gray-400'}`}>
-                  Full Name
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
+              {/* Full Name */}
+              <div className={inputWrapperClasses('name')}>
+                <label className={`absolute transition-all duration-300 flex items-center gap-2 ${formData.name || focusedField === 'name' ? '-top-6 text-[10px] text-[#978c21] font-black uppercase tracking-widest' : 'top-3 text-gray-400'}`}>
+                  <User size={14} /> Full Name
                 </label>
                 <input
                   name="name"
@@ -61,14 +77,14 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
                   onBlur={() => setFocusedField(null)}
                   type="text"
                   required
-                  className={inputClasses('name')}
+                  className="w-full bg-transparent py-3 outline-none text-slate-800"
                 />
               </div>
 
               {/* Email */}
-              <div className="relative">
-                <label className={`absolute transition-all duration-300 ${formData.email || focusedField === 'email' ? '-top-6 text-xs text-[#978c21] font-bold' : 'top-3 text-gray-400'}`}>
-                  Email Address
+              <div className={inputWrapperClasses('email')}>
+                <label className={`absolute transition-all duration-300 flex items-center gap-2 ${formData.email || focusedField === 'email' ? '-top-6 text-[10px] text-[#978c21] font-black uppercase tracking-widest' : 'top-3 text-gray-400'}`}>
+                  <Mail size={14} /> Email Address
                 </label>
                 <input
                   name="email"
@@ -78,14 +94,14 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
                   onBlur={() => setFocusedField(null)}
                   type="email"
                   required
-                  className={inputClasses('email')}
+                  className="w-full bg-transparent py-3 outline-none text-slate-800"
                 />
               </div>
 
               {/* Phone */}
-              <div className="relative">
-                <label className={`absolute transition-all duration-300 ${formData.phone || focusedField === 'phone' ? '-top-6 text-xs text-[#978c21] font-bold' : 'top-3 text-gray-400'}`}>
-                  Phone Number
+              <div className={inputWrapperClasses('phone')}>
+                <label className={`absolute transition-all duration-300 flex items-center gap-2 ${formData.phone || focusedField === 'phone' ? '-top-6 text-[10px] text-[#978c21] font-black uppercase tracking-widest' : 'top-3 text-gray-400'}`}>
+                  <Phone size={14} /> Phone Number
                 </label>
                 <input
                   name="phone"
@@ -95,14 +111,14 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
                   onBlur={() => setFocusedField(null)}
                   type="tel"
                   required
-                  className={inputClasses('phone')}
+                  className="w-full bg-transparent py-3 outline-none text-slate-800"
                 />
               </div>
 
               {/* Subject */}
-              <div className="relative">
-                <label className={`absolute transition-all duration-300 ${formData.subject || focusedField === 'subject' ? '-top-6 text-xs text-[#978c21] font-bold' : 'top-3 text-gray-400'}`}>
-                  Subject
+              <div className={inputWrapperClasses('subject')}>
+                <label className={`absolute transition-all duration-300 flex items-center gap-2 ${formData.subject || focusedField === 'subject' ? '-top-6 text-[10px] text-[#978c21] font-black uppercase tracking-widest' : 'top-3 text-gray-400'}`}>
+                  <BookOpen size={14} /> Subject
                 </label>
                 <input
                   name="subject"
@@ -112,14 +128,14 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
                   onBlur={() => setFocusedField(null)}
                   type="text"
                   required
-                  className={inputClasses('subject')}
+                  className="w-full bg-transparent py-3 outline-none text-slate-800"
                 />
               </div>
 
               {/* Message */}
-              <div className="relative md:col-span-2 mt-4">
-                <label className={`absolute transition-all duration-300 ${formData.message || focusedField === 'message' ? '-top-6 text-xs text-[#978c21] font-bold' : 'top-3 text-gray-400'}`}>
-                  Your Message
+              <div className={`md:col-span-2 ${inputWrapperClasses('message')}`}>
+                <label className={`absolute transition-all duration-300 flex items-center gap-2 ${formData.message || focusedField === 'message' ? '-top-6 text-[10px] text-[#978c21] font-black uppercase tracking-widest' : 'top-3 text-gray-400'}`}>
+                  <MessageSquare size={14} /> Your Message
                 </label>
                 <textarea
                   name="message"
@@ -127,78 +143,90 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
                   onChange={handleChange}
                   onFocus={() => setFocusedField('message')}
                   onBlur={() => setFocusedField(null)}
-                  rows="4"
+                  rows="3"
                   required
-                  className={inputClasses('message')}
+                  className="w-full bg-transparent py-3 outline-none text-slate-800 resize-none"
                 />
               </div>
 
-              <div className="md:col-span-2 pt-6">
-                <button
+              <div className="md:col-span-2 pt-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={loading}
-                  className="group relative px-12 py-4 bg-gray-900 text-white rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] disabled:opacity-50"
+                  className="group relative inline-flex items-center gap-4 px-10 py-5 bg-slate-900 text-white rounded-full overflow-hidden transition-all duration-500 shadow-lg hover:shadow-[#978c21]/20 disabled:opacity-50"
                 >
-                  <span className="relative z-10 flex items-center gap-3 font-bold tracking-widest text-sm">
-                    {loading ? "SENDING..." : "SUBMIT INQUIRY"}
-                    <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  <span className="relative z-10 flex items-center gap-3 font-bold tracking-[0.2em] text-xs">
+                    {loading ? "PROCESSING..." : "SUBMIT INQUIRY"}
+                    <Send size={16} className={`transition-transform duration-300 ${loading ? 'animate-pulse' : 'group-hover:translate-x-1 group-hover:-translate-y-1'}`} />
                   </span>
                   <div className="absolute inset-0 bg-[#978c21] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                </button>
+                </motion.button>
               </div>
             </form>
           </div>
 
           {/* RIGHT — CONTACT INFO SIDE */}
-          <div className="lg:w-2/5 bg-gray-900 p-8 md:p-16 text-white relative overflow-hidden flex flex-col justify-between">
-            {/* Abstract Background pattern */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#978c21]/40 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-            </div>
+          <div className="lg:w-2/5 bg-slate-900 p-8 md:p-16 lg:p-20 text-white relative overflow-hidden flex flex-col justify-between">
+            {/* Ambient Background Glows */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#978c21]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
 
             <div className="relative z-10">
-              <h3 className="text-3xl font-serif mb-8">Contact Info</h3>
+              <h3 className="text-3xl font-serif mb-12">Office <span className="text-[#978c21]">Details</span></h3>
               
-              <div className="space-y-8">
+              <div className="space-y-10">
+                {/* Phone Card */}
                 <div className="flex gap-6 group">
-                  <div className="w-12 h-12 shrink-0 border border-white/20 rounded-2xl flex items-center justify-center group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-300">
-                    <span className="text-xl">📞</span>
+                  <div className="w-14 h-14 shrink-0 border border-white/10 rounded-2xl flex items-center justify-center bg-white/5 group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-500">
+                    <Phone size={22} className="text-[#978c21] group-hover:text-white transition-colors" />
                   </div>
-                  <div>
-                    <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-1">Call Anytime</p>
-                    <p className="text-lg font-medium tracking-tight">{data?.primary_phone || "+1 234 567 890"}</p>
-                    {data?.secondary_phone && <p className="text-white/60 text-sm mt-1">{data.secondary_phone}</p>}
+                  <div className="flex flex-col justify-center">
+                    <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Call Anytime</p>
+                    <a href={`tel:${data?.primary_phone}`} className="text-lg font-medium hover:text-[#978c21] transition-colors">
+                      {data?.primary_phone || "+1 234 567 890"}
+                    </a>
                   </div>
                 </div>
 
+                {/* Email Card */}
                 <div className="flex gap-6 group">
-                  <div className="w-12 h-12 shrink-0 border border-white/20 rounded-2xl flex items-center justify-center group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-300">
-                    <span className="text-xl">✉️</span>
+                  <div className="w-14 h-14 shrink-0 border border-white/10 rounded-2xl flex items-center justify-center bg-white/5 group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-500">
+                    <Mail size={22} className="text-[#978c21] group-hover:text-white transition-colors" />
                   </div>
-                  <div>
-                    <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-1">Email Support</p>
-                    <p className="text-lg font-medium tracking-tight">{data?.primary_email || "contact@luxury.com"}</p>
+                  <div className="flex flex-col justify-center">
+                    <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Email Support</p>
+                    <a href={`mailto:${data?.primary_email}`} className="text-lg font-medium hover:text-[#978c21] transition-colors">
+                      {data?.primary_email || "contact@agency.com"}
+                    </a>
                   </div>
                 </div>
 
+                {/* Location Card */}
                 <div className="flex gap-6 group">
-                  <div className="w-12 h-12 shrink-0 border border-white/20 rounded-2xl flex items-center justify-center group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-300">
-                    <span className="text-xl">📍</span>
+                  <div className="w-14 h-14 shrink-0 border border-white/10 rounded-2xl flex items-center justify-center bg-white/5 group-hover:bg-[#978c21] group-hover:border-[#978c21] transition-all duration-500">
+                    <MapPin size={22} className="text-[#978c21] group-hover:text-white transition-colors" />
                   </div>
-                  <div>
-                    <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-1">Main Office</p>
-                    <p className="text-lg font-medium leading-snug max-w-[200px]">{data?.address || "123 Luxury Avenue, New York, NY 10001"}</p>
+                  <div className="flex flex-col justify-center">
+                    <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Our Location</p>
+                    <p className="text-base font-medium leading-relaxed max-w-[220px]">
+                      {data?.address || "123 Luxury Avenue, New York, NY 10001"}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom branding or quote */}
-            <div className="relative z-10 mt-12 pt-12 border-t border-white/10">
-              <p className="italic text-white/40 text-sm">
-                "Excellence is not a skill, it is an attitude."
+            {/* Bottom Quote / CTA */}
+            <div className="relative z-10 mt-16 pt-10 border-t border-white/10">
+              <p className="italic text-white/50 text-sm font-serif leading-relaxed mb-6">
+                "Building spaces where luxury meets comfort, and dreams find a home."
               </p>
+              <div className="flex items-center gap-2 text-[#978c21] font-bold text-[10px] uppercase tracking-widest">
+                <span>View on Maps</span>
+                <ArrowRight size={14} />
+              </div>
             </div>
           </div>
 

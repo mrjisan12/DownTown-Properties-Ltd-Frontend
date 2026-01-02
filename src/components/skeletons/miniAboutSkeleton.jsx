@@ -1,67 +1,61 @@
 import React from "react";
-import { Skeleton } from "../ui/skeleton";
 
 const MiniAboutSkeleton = () => {
-    return (
-        <section className="relative overflow-hidden py-20 md:py-32 bg-background">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-                    {/* Image Skeleton */}
-                    <div className="relative order-1">
-                        <div className="relative p-1 rounded-3xl bg-slate-800/40">
-                            <Skeleton className="w-full aspect-4/5 md:aspect-3/4 rounded-2xl bg-slate-700/50" />
-                        </div>
-
-                        {/* Floating badge skeleton */}
-                        <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-2xl bg-slate-800/60 p-2">
-                            <Skeleton className="w-full h-full rounded-xl bg-slate-700/50" />
-                        </div>
-                    </div>
-
-                    {/* Text Skeleton */}
-                    <div className="order-2">
-                        <div className="max-w-xl mx-auto">
-
-                            {/* Section line */}
-                            <Skeleton className="h-1 w-16 mb-6 bg-slate-600/60" />
-
-                            {/* Title */}
-                            <div className="space-y-3 mb-6">
-                                <Skeleton className="h-10 w-full bg-slate-700/60" />
-                                <Skeleton className="h-10 w-5/6 bg-slate-700/60" />
-                                <Skeleton className="h-10 w-4/6 bg-slate-700/60" />
-                            </div>
-
-                            {/* Description */}
-                            <div className="space-y-3 mb-8">
-                                <Skeleton className="h-5 w-full bg-slate-600/50" />
-                                <Skeleton className="h-5 w-full bg-slate-600/50" />
-                                <Skeleton className="h-5 w-5/6 bg-slate-600/50" />
-                            </div>
-
-                            {/* Button */}
-                            <Skeleton className="h-14 w-48 rounded-full mb-12 bg-slate-700/60" />
-
-                            {/* Stats */}
-                            <div className="pt-8 border-t border-slate-700/40">
-                                <div className="grid grid-cols-3 gap-8">
-                                    {[1, 2, 3].map((_, i) => (
-                                        <div key={i} className="text-center space-y-3">
-                                            <Skeleton className="h-8 w-16 mx-auto bg-slate-700/60" />
-                                            <Skeleton className="h-4 w-20 mx-auto bg-slate-600/50" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
+  return (
+    <section className="relative overflow-hidden py-24 bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          
+          {/* IMAGE SKELETON */}
+          <div className="relative animate-pulse">
+            <div className="w-full h-137.5 rounded-[2.5rem] bg-gray-300 dark:bg-gray-700 shadow-2xl border border-gray-200 dark:border-gray-600" />
+            {/* Badge Placeholder */}
+            <div className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-600">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gray-400 dark:bg-gray-600 rounded-xl" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 w-3/4 bg-gray-400 dark:bg-gray-600 rounded" />
+                  <div className="h-3 w-1/2 bg-gray-300 dark:bg-gray-500 rounded" />
                 </div>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+
+          {/* CONTENT SKELETON */}
+          <div className="flex flex-col space-y-8">
+            <div className="space-y-4 animate-pulse">
+              {/* Small Header */}
+              <div className="h-3 w-1/4 bg-gray-300 dark:bg-gray-600 rounded" />
+              {/* Main Title */}
+              <div className="h-8 md:h-12 w-full bg-gray-300 dark:bg-gray-600 rounded" />
+              <div className="h-8 md:h-12 w-5/6 bg-gray-300 dark:bg-gray-600 rounded" />
+            </div>
+
+            {/* Paragraph */}
+            <div className="space-y-2 animate-pulse">
+              <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+              <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded" />
+              <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
+            </div>
+
+            {/* METRICS GRID */}
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              {[1, 2, 3, 4].map((item) => (
+                <div
+                  key={item}
+                  className="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-6 rounded-2xl animate-pulse"
+                >
+                  <div className="h-8 w-12 bg-gray-300 dark:bg-gray-600 rounded mb-2" />
+                  <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-600 rounded" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default MiniAboutSkeleton;

@@ -7,6 +7,9 @@ import MiniAbout from "./MiniAbout/MiniAbout";
 import MissionVision from "./MissionVision/MissionVision";
 import Staff from "./Staff/Staff";
 import { useGetMiniAboutQuery } from "@/redux/api/homeApi";
+import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
+import MissionVisionSkeleton from "@/components/skeletons/missionVisionSkeleton";
+import StaffSkeleton from "./Staff/Staff";
 
 const About = () => {
   window.scrollTo({
@@ -31,16 +34,27 @@ const About = () => {
         highlight="Excellence"
       />
 
-      <MiniAbout
-        loading={aboutLoading || miniAboutLoading}
-        about={about}
-        metrics={miniAbout?.metrics || []}
-      />
+      {/* MiniAbout Section */}
+      {miniAboutLoading || !miniAbout ? (
+        <MiniAboutSkeleton />
+      ) : (
+        <MiniAbout
+          loading={aboutLoading || miniAboutLoading}
+          about={about}
+          metrics={miniAbout?.metrics || []}
+        />
+      )}
 
-      <MissionVision loading={aboutLoading} about={about} />
+      {/* MissionVision Section */}
+      {aboutLoading || !about ? (
+        <MissionVisionSkeleton/>
+      ) : (
+        <MissionVision loading={aboutLoading} about={about} />
+      )}
 
       {/* Staff Section */}
-      <Staff loading={staffLoading} staff={staffList} />
+    
+        <Staff loading={staffLoading} staff={staffList} />
     </>
   );
 };

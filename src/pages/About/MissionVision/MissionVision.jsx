@@ -55,16 +55,6 @@ const MissionVision = ({ about, loading }) => {
     setVisionTyped("");
   }, [about]);
 
-  if (loading) {
-    return (
-      <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 animate-pulse">
-        <div className="h-64 bg-gradient-to-r from-gray-100 to-gray-200 rounded-3xl blur-sm"></div>
-        <div className="h-64 bg-gradient-to-r from-gray-100 to-gray-200 rounded-3xl blur-sm"></div>
-      </div>
-    );
-  }
-
-  if (!about) return null;
 
   return (
     <section 

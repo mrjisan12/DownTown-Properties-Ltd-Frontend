@@ -41,16 +41,6 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
     }
   }, [isInView, metrics]);
 
-  if (loading) {
-    return (
-      <div className="container mx-auto px-6 py-20 animate-pulse">
-        <div className="h-[400px] bg-slate-100 rounded-3xl" />
-      </div>
-    );
-  }
-
-  if (!about) return null;
-
   return (
     <section 
       ref={sectionRef}
@@ -58,8 +48,8 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
     >
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-slate-200/50 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-125 h-125 bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-slate-200/50 rounded-full blur-[120px]" />
       </div>
 
       <div className="container relative mx-auto px-6">
@@ -96,7 +86,7 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                className="w-full h-[550px]"
+                className="w-full h-137.5"
               >
                 <img
                   src={about.banner}

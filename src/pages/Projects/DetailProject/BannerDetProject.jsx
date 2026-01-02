@@ -15,7 +15,7 @@ const BannerDetProject = ({ banner, title, status }) => {
 
   return (
     <motion.section
-      className="relative w-screen h-screen overflow-hidden -mx-[calc((100vw-100%)/2)]"
+      className="relative w-screen h-screen overflow-hidden -mx-[calc((100vw-100%)/2)] pointer-events-none"
       style={{ opacity }}
     >
       {/* Dynamic linear overlay */}
