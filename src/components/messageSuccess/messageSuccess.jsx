@@ -43,7 +43,7 @@ export default function MessageSuccess({ show, onClose }) {
             </div>
 
             <div className="mt-2 space-y-2">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold bg-linear-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
                 Sent Successfully!
               </h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">

@@ -7,7 +7,7 @@ const ProjectSkeletons = () => {
       {/* ================= Banner Skeleton ================= */}
       <div className="relative h-[80vh] w-full overflow-hidden bg-black">
         <Skeleton className="absolute inset-0 rounded-none bg-slate-900" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/60 to-black/90" />
 
         <div className="relative z-10 flex h-full flex-col items-center justify-center space-y-6">
           <Skeleton className="h-4 w-40 bg-slate-600" />

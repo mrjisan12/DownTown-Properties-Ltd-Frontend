@@ -27,7 +27,7 @@ const Staff = ({ staff = [], loading }) => {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 grid md:grid-cols-3 gap-8">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-[450px] bg-slate-100 rounded-2xl animate-pulse" />
+            <div key={i} className="h-112.5 bg-slate-100 rounded-2xl animate-pulse" />
           ))}
         </div>
       </section>

@@ -50,7 +50,7 @@ const HomeMiniAbout = ({
       ref={containerRef}
       className="relative overflow-hidden py-20 md:py-32 bg-background"
     >
-      {/* Animated background gradient using your theme colors */}
+      {/* Animated background linear using your theme colors */}
       <motion.div
         style={{ opacity: bgOpacity }}
         className="absolute inset-0 bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5"
@@ -126,7 +126,7 @@ const HomeMiniAbout = ({
                   className="w-full h-auto aspect-4/5 md:aspect-3/4 object-cover"
                 />
 
-                {/* Gradient overlay */}
+                {/* linear overlay */}
                 {/* <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" /> */}
 
                 {/* Reflective shine effect */}
@@ -146,7 +146,7 @@ const HomeMiniAbout = ({
                 className="absolute inset-0 rounded-3xl opacity-50"
                 style={{
                   // background:
-                  //   "linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary))",
+                  //   "linear-linear(45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary))",
                   backgroundSize: "300% 300%",
                 }}
               />

@@ -21,7 +21,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
 
   const styles = `
     .video-mask {
-      background: radial-gradient(circle at center, transparent 0%, rgba(15, 15, 15, 0.4) 100%);
+      background: radial-linear(circle at center, transparent 0%, rgba(15, 15, 15, 0.4) 100%);
     }
     .text-glow {
       text-shadow: 0 0 30px rgba(249, 174, 26, 0.3);
@@ -47,7 +47,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
               exit={{ opacity: 0 }}
               className="absolute inset-0 z-50 flex items-center justify-center bg-[#0f0f0f]"
             >
-              <Loader2 className="w-8 h-8 text-[#F9AE1A] animate-spin" />
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -80,13 +80,13 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
             <motion.span 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-block px-4 py-1.5 mb-6 glass-pill text-[10px] md:text-xs font-bold tracking-[0.4em] text-[#F9AE1A] uppercase"
+              className="inline-block px-4 py-1.5 mb-6 glass-pill text-[10px] md:text-xs font-bold tracking-[0.4em] text-primary uppercase"
             >
               Beyond the Horizon
             </motion.span>
             
             <h1 className="text-5xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter text-white mb-8 text-glow">
-              DOWN<span className="text-[#96D9F9]">.</span>TOWN
+              DOWN<span className="text-secondary-light">.</span>TOWN
             </h1>
 
             <div className="flex items-center justify-center gap-8 text-white/40 font-medium text-[10px] md:text-sm tracking-[0.2em] uppercase">
@@ -109,9 +109,9 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
           >
             <div className="relative w-5 h-5 flex items-center justify-center">
               {isMuted ? (
-                <VolumeX className="w-full h-full text-white/60 group-hover:text-[#F9AE1A] transition-colors" />
+                <VolumeX className="w-full h-full text-white/60 group-hover:text-primary transition-colors" />
               ) : (
-                <Volume2 className="w-full h-full text-[#F9AE1A]" />
+                <Volume2 className="w-full h-full text-primary" />
               )}
             </div>
             <span className="text-white font-bold text-[10px] uppercase tracking-widest">
@@ -126,7 +126,7 @@ const HomeVideo = ({ videoId = "_vtV8atti84" }) => {
           <div className="w-px h-32 bg-white/10 relative overflow-hidden">
             <motion.div 
               style={{ scaleY: scrollYProgress }}
-              className="absolute top-0 left-0 w-full h-full bg-[#F9AE1A] origin-top"
+              className="absolute top-0 left-0 w-full h-full bg-primary origin-top"
             />
           </div>
         </div>

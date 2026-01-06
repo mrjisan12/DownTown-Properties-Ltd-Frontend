@@ -74,10 +74,12 @@ const Contact = () => {
       )}
 
       {/* MAP */}
-      <CommonMap
-        google_map_embed={settingData?.data?.[0]?.google_map_embed}
-        loading={settingDataLoading}
-      />
+      <div className="-mb-20">
+        <CommonMap
+          google_map_embed={settingData?.data?.[0]?.google_map_embed}
+          loading={settingDataLoading}
+        />
+      </div>
     </div>
   );
 };

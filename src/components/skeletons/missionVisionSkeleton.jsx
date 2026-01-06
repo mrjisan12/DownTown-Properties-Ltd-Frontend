@@ -2,12 +2,12 @@ import React from 'react';
 
 const MissionVisionSkeleton = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black py-24">
+    <section className="relative overflow-hidden bg-linear-to-b from-black via-gray-900 to-black py-24">
       <div className="container mx-auto px-6">
         {/* Section Header Skeleton */}
         <div className="text-center mb-16 animate-pulse">
           <div className="h-12 w-60 md:w-80 bg-gray-700 dark:bg-gray-600 mx-auto rounded"></div>
-          <div className="h-1 w-24 bg-gradient-to-r from-primary via-accent to-secondary mx-auto rounded-full mt-4"></div>
+          <div className="h-1 w-24 bg-linear-to-r from-primary via-accent to-secondary mx-auto rounded-full mt-4"></div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 relative">

@@ -51,7 +51,7 @@ const MapDetProject = ({ map, loading }) => {
       className="relative w-screen -mx-[calc((100vw-100%)/2)] py-24 bg-center bg-cover bg-no-repeat z-50 overflow-hidden"
       style={{
         background:
-          "linear-gradient(135deg, #0a192f 0%, #1a365d 50%, #0a192f 100%)",
+          "linear-linear(135deg, #0a192f 0%, #1a365d 50%, #0a192f 100%)",
       }}
     >
       {/* Animated background particles */}
@@ -59,7 +59,7 @@ const MapDetProject = ({ map, loading }) => {
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-gradient-to-r from-blue-400/10 to-teal-400/10"
+            className="absolute rounded-full bg-linear-to-r from-secondary to-secondary-light"
             style={{
               width: `${Math.random() * 4 + 1}px`,
               height: `${Math.random() * 4 + 1}px`,
@@ -77,8 +77,8 @@ const MapDetProject = ({ map, loading }) => {
         className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `
-            linear-gradient(to right, #ffffff 1px, transparent 1px),
-            linear-gradient(to bottom, #ffffff 1px, transparent 1px)
+            linear-linear(to right, #ffffff 1px, transparent 1px),
+            linear-linear(to bottom, #ffffff 1px, transparent 1px)
           `,
           backgroundSize: "40px 40px",
         }}
@@ -89,18 +89,18 @@ const MapDetProject = ({ map, loading }) => {
         <div className="text-center mb-20">
           {/* Animated accent line */}
           <div className="flex justify-center mb-8">
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-teal-400 to-transparent relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shimmer"></div>
+            <div className="w-24 h-1 bg-linear-to-r from-transparent via-secondary to-transparent relative">
+              <div className="absolute inset-0 bg-linear-to-r from-transparent via-white to-transparent animate-shimmer"></div>
             </div>
           </div>
 
           <div className="inline-block relative mb-8">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-blue-100 via-teal-100 to-blue-100 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-blue-100 via-teal-100 to-blue-100 bg-clip-text text-transparent">
                 {displayedTitle}
               </span>
               <span
-                className={`inline-block w-[2px] h-12 md:h-16 ml-2 bg-gradient-to-b from-teal-400 via-blue-400 to-teal-400 align-middle ${
+                className={`inline-block w-[2px] h-12 md:h-16 ml-2 bg-linear-to-b from-teal-400 via-blue-400 to-teal-400 align-middle ${
                   showCursor ? "opacity-100" : "opacity-0"
                 } transition-opacity duration-150`}
               ></span>
@@ -114,10 +114,10 @@ const MapDetProject = ({ map, loading }) => {
           </div>
 
           {/* Coordinates display */}
-          <div className="mt-12 inline-flex items-center gap-6 bg-gradient-to-r from-blue-900/30 to-teal-900/30 backdrop-blur-sm rounded-2xl px-8 py-4 border border-gray-700/50">
+          <div className="mt-12 inline-flex items-center gap-6 bg-linear-to-r from-blue-900/30 to-teal-900/30 backdrop-blur-sm rounded-2xl px-8 py-4 border border-gray-700/50">
             <div className="text-left">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-teal-400 to-blue-400 animate-pulse"></div>
+                <div className="w-3 h-3 rounded-full bg-linear-to-r from-teal-400 to-blue-400 animate-pulse"></div>
                 <span className="text-sm text-gray-300 font-medium tracking-wider">
                   COORDINATES
                 </span>
@@ -126,10 +126,10 @@ const MapDetProject = ({ map, loading }) => {
                 {location.longitude}° N,{location.latitude}° W
               </p>
             </div>
-            <div className="h-8 w-px bg-gradient-to-b from-transparent via-gray-500 to-transparent"></div>
+            <div className="h-8 w-px bg-linear-to-b from-transparent via-gray-500 to-transparent"></div>
             <div className="text-left">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-teal-400 animate-pulse"></div>
+                <div className="w-3 h-3 rounded-full bg-linear-to-r from-blue-400 to-teal-400 animate-pulse"></div>
                 <span className="text-sm text-gray-300 font-medium tracking-wider">
                   ELEVATION
                 </span>
@@ -144,17 +144,17 @@ const MapDetProject = ({ map, loading }) => {
         {/* Map Container */}
         <div className="relative w-full">
           {/* Floating elements */}
-          <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-teal-500/10 to-blue-500/10 rounded-full blur-3xl -z-10"></div>
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-tr from-blue-500/10 to-teal-500/10 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute -top-8 -right-8 w-32 h-32 bg-linear-to-br from-teal-500/10 to-blue-500/10 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-linear-to-tr from-blue-500/10 to-teal-500/10 rounded-full blur-3xl -z-10"></div>
 
           {/* Map Frame */}
-          <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/30 border border-gray-700/50">
+          <div className="relative bg-linear-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/30 border border-gray-700/50">
             {/* Frame top bar */}
-            <div className="h-12 bg-gradient-to-r from-gray-800 to-gray-900 border-b border-gray-700/50 flex items-center px-6">
+            <div className="h-12 bg-linear-to-r from-gray-800 to-gray-900 border-b border-gray-700/50 flex items-center px-6">
               <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-red-500 to-red-400"></div>
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-400"></div>
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-500 to-green-400"></div>
+                <div className="w-3 h-3 rounded-full bg-linear-to-r from-red-500 to-red-400"></div>
+                <div className="w-3 h-3 rounded-full bg-linear-to-r from-yellow-500 to-yellow-400"></div>
+                <div className="w-3 h-3 rounded-full bg-linear-to-r from-green-500 to-green-400"></div>
               </div>
               <div className="ml-6 text-sm text-gray-400 font-medium tracking-wide">
                 Geographic Analysis Interface
@@ -164,7 +164,7 @@ const MapDetProject = ({ map, loading }) => {
             {/* Map content */}
             <div className="relative w-full h-[600px] md:h-[700px]">
               {loading ? (
-                <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-gray-800 to-gray-900">
+                <div className="flex flex-col items-center justify-center h-full bg-linear-to-br from-gray-800 to-gray-900">
                   {/* Elegant loading spinner */}
                   <div className="relative">
                     <div className="w-20 h-20 rounded-full border-4 border-gray-700/50"></div>
@@ -175,7 +175,7 @@ const MapDetProject = ({ map, loading }) => {
                     <div className="absolute top-4 left-4 w-12 h-12 rounded-full border-2 border-t-transparent border-r-teal-400/50 border-b-blue-400/50 border-l-transparent animate-spin animation-delay-200"></div>
 
                     {/* Center dot */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-teal-400 animate-pulse"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-linear-to-r from-blue-400 to-teal-400 animate-pulse"></div>
                   </div>
 
                   <div className="mt-8 text-center">
@@ -183,20 +183,20 @@ const MapDetProject = ({ map, loading }) => {
                       INITIALIZING GEOSPATIAL DATA
                     </p>
                     <div className="w-64 h-1 bg-gray-700/50 rounded-full overflow-hidden">
-                      <div className="h-full w-1/3 bg-gradient-to-r from-blue-400 via-teal-400 to-blue-400 animate-shimmer rounded-full"></div>
+                      <div className="h-full w-1/3 bg-linear-to-r from-blue-400 via-teal-400 to-blue-400 animate-shimmer rounded-full"></div>
                     </div>
                   </div>
                 </div>
               ) : (
                 <>
                   {/* Map container with overlay effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-teal-900/20 z-10 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-linear-to-br from-blue-900/20 to-teal-900/20 z-10 pointer-events-none"></div>
 
                   {/* Corner accents */}
-                  <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-gradient-to-r from-blue-400 to-teal-400 z-20"></div>
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-gradient-to-r from-teal-400 to-blue-400 z-20"></div>
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-gradient-to-r from-blue-400 to-teal-400 z-20"></div>
-                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-gradient-to-r from-teal-400 to-blue-400 z-20"></div>
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-linear-to-r from-blue-400 to-teal-400 z-20"></div>
+                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-linear-to-r from-teal-400 to-blue-400 z-20"></div>
+                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-linear-to-r from-blue-400 to-teal-400 z-20"></div>
+                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-linear-to-r from-teal-400 to-blue-400 z-20"></div>
 
                   {/* Map iframe with enhanced styling */}
                   <iframe
@@ -215,14 +215,14 @@ const MapDetProject = ({ map, loading }) => {
                   <div className="absolute bottom-6 left-6 z-20">
                     <div className="relative group">
                       {/* Pulsing effect */}
-                      <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 to-teal-400/20 rounded-full animate-ping"></div>
+                      <div className="absolute -inset-4 bg-linear-to-r from-blue-400/20 to-teal-400/20 rounded-full animate-ping"></div>
 
                       {/* Marker */}
-                      <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-4 border border-gray-700/50 backdrop-blur-sm shadow-2xl min-w-[200px]">
+                      <div className="relative bg-linear-to-r from-gray-900 to-gray-800 rounded-xl p-4 border border-gray-700/50 backdrop-blur-sm shadow-2xl min-w-[200px]">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="relative">
-                            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"></div>
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-teal-400 to-blue-400 animate-ping"></div>
+                            <div className="w-4 h-4 rounded-full bg-linear-to-r from-teal-400 to-blue-400"></div>
+                            <div className="absolute inset-0 rounded-full bg-linear-to-r from-teal-400 to-blue-400 animate-ping"></div>
                           </div>
                           <span className="text-sm font-bold text-white tracking-wide">
                             PROJECT SITE
@@ -279,7 +279,7 @@ const MapDetProject = ({ map, loading }) => {
             </div>
 
             {/* Frame bottom bar */}
-            <div className="h-10 bg-gradient-to-r from-gray-900 to-gray-800 border-t border-gray-700/50 flex items-center justify-between px-6 text-xs text-gray-500 font-mono">
+            <div className="h-10 bg-linear-to-r from-gray-900 to-gray-800 border-t border-gray-700/50 flex items-center justify-between px-6 text-xs text-gray-500 font-mono">
               <div>GEO:ACTIVE</div>
               <div className="flex items-center gap-4">
                 <span>ZOOM: 15x</span>
@@ -295,7 +295,7 @@ const MapDetProject = ({ map, loading }) => {
         {/* Legend */}
         <div className="mt-12 flex flex-wrap justify-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"></div>
+            <div className="w-4 h-4 rounded-full bg-linear-to-r from-teal-400 to-blue-400"></div>
             <span className="text-sm text-gray-300">Project Site</span>
           </div>
           <div className="flex items-center gap-2">
@@ -348,8 +348,8 @@ const MapDetProject = ({ map, loading }) => {
           animation-delay: 200ms;
         }
 
-        .border-gradient-to-r {
-          border-image: linear-gradient(to right, #2dd4bf, #60a5fa) 1;
+        .border-linear-to-r {
+          border-image: linear-linear(to right, #2dd4bf, #60a5fa) 1;
         }
       `}</style>
     </section>

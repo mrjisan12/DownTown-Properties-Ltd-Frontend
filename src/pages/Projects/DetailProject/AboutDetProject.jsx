@@ -68,7 +68,7 @@ const AboutDetProject = ({ project }) => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.2 }}
             viewport={{ once: true }}
-            className="w-full lg:w-[40%] h-[500px]"
+            className="w-full lg:w-[40%] h-125"
           >
             <img 
               src={project.secondary_image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"} 
@@ -101,7 +101,7 @@ const AboutDetProject = ({ project }) => {
       </section>
 
       {/* --- SECTION 3: FULL WIDTH BOLD STATS --- */}
-      <section className="bg-slate-900 py-32 text-white">
+      <section className="bg-secondary py-32 text-white">
         <div className="w-full px-8 lg:px-24">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-4">
             <BigStat number={project.no_of_floors || "G+13"} label="Storeys" />
@@ -121,7 +121,7 @@ const DetailBox = ({ icon, label, value, isFull }) => (
       {icon}
       {label}
     </div>
-    <p className="text-4xl font-light text-slate-800 tracking-tight border-b border-slate-200 pb-6 group-hover:border-slate-900 transition-colors duration-500">
+    <p className="text-4xl font-light text-secondary tracking-tight border-b border-slate-200 pb-6 group-hover:border-secondary transition-colors duration-500">
       {value}
     </p>
   </div>

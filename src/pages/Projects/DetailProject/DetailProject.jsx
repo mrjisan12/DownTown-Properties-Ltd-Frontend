@@ -6,15 +6,15 @@ import BannerDetProject from "./BannerDetProject";
 import AboutDetProject from "./AboutDetProject";
 import MapDetProject from "./MapDetProject";
 import GalleryDetProject from "./GalleryDetProject";
+import CommonBannerSkeleton from "@/components/skeletons/commonBannerSkeleton";
 
 const DetailProject = () => {
   const { id } = useParams();
 
-  const { data, isLoading, isError } =
-    useGetDetailProjectsQuery(id);
+  const { data, isLoading, isError } = useGetDetailProjectsQuery(id);
 
   if (isLoading) {
-    return <p className="text-center py-20">Loading...</p>;
+    return <CommonBannerSkeleton />;
   }
 
   if (isError) {
@@ -34,12 +34,12 @@ const DetailProject = () => {
       {/* About */}
       <AboutDetProject project={project} />
 
+      <GalleryDetProject project_gallery={project.project_gallery} />
       {/* Map */}
-      {project.google_map && (
-        <MapDetProject map={project.google_map} />
-      )}
-
-      <GalleryDetProject project_gallery={project.project_gallery}/>
+      <div className="-mb-20">
+        {" "}
+        {project.google_map && <MapDetProject map={project.google_map} />}{" "}
+      </div>
     </section>
   );
 };

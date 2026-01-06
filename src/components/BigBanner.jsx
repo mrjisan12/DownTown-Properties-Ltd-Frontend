@@ -7,102 +7,125 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-const DEFAULT_IMAGES = [
-  "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?q=80&w=1920&auto=format&fit=crop"
-];
-
 const BigBanner = ({ images = [], loading = false }) => {
   const containerRef = useRef(null);
-
-  const displayImages = loading ? DEFAULT_IMAGES : (images.length > 0 ? images : DEFAULT_IMAGES);
   const autoplay = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }));
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"],
+    offset: ["start start", "end end"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
-    damping: 25,
+    stiffness: 45,
+    damping: 30,
     restDelta: 0.001
   });
 
-  /* ------------------ Responsive Scroll Animations ------------------ */
+  /* ------------------ Parallax & Animation Logic ------------------ */
   
-  // On Mobile, we want less 'inset' so the image stays visible
-  // Desktop: 15% side inset | Mobile: 5% side inset
+  // 1. Reveal effect: The image box grows and rounds out
   const clipPath = useTransform(
     smoothProgress,
-    [0, 0.45],
-    [
-      "inset(10% 5% 10% 5% round 20px)", // Mobile-friendly starting state
-      "inset(0% 0% 0% 0% round 0px)"
-    ]
+    [0, 0.3],
+    ["inset(12% 8% 12% 8% round 40px)", "inset(0% 0% 0% 0% round 0px)"]
   );
 
-  // We switch values for desktop using a media query approach in the transform would be complex,
-  // so we use CSS to handle the container's responsive scaling.
-  const imageScale = useTransform(smoothProgress, [0, 1], [1.2, 1.05]);
+  // 2. Parallax: Background images scale down slowly
+  const imageScale = useTransform(smoothProgress, [0, 1], [1.3, 1.1]);
+  
+  // 3. Parallax: Text moves faster than the scroll (Floating effect)
+  const textY = useTransform(smoothProgress, [0, 1], [0, -200]);
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
+  // Loading Skeleton Component
+  const LoadingSkeleton = () => (
+    <div className="w-full h-full bg-neutral-200 animate-pulse flex items-center justify-center">
+      <div className="space-y-4 w-1/2">
+        <div className="h-4 bg-neutral-300 rounded w-1/4 mx-auto" />
+        <div className="h-12 bg-neutral-300 rounded w-full" />
+      </div>
+    </div>
+  );
 
   return (
-    <div ref={containerRef} className="relative w-full h-[140vh] md:h-[180vh] bg-neutral-50">
+    <div ref={containerRef} className="relative w-full h-[250vh] bg-[#0a0a0a]">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        
         <motion.div
-          style={{ 
-            clipPath: clipPath,
-            willChange: "clip-path"
-          }}
-          // The lg: clipPath override in CSS if you want to be specific for desktop
+          style={{ clipPath, willChange: "clip-path" }}
           className="relative w-full h-full overflow-hidden bg-white shadow-2xl"
         >
-          <Carousel
-            plugins={[autoplay.current]}
-            opts={{ 
-              loop: true,
-              duration: 45, 
-            }}
-            className="w-full h-full"
-          >
-            <CarouselContent className="ml-0 h-full">
-              {displayImages.map((img, index) => (
-                <CarouselItem key={index} className="pl-0 h-full">
-                  <div className="relative w-full h-full overflow-hidden">
-                    <motion.img
-                      style={{ scale: imageScale }}
-                      src={img.url || img}
-                      alt={`Slide ${index + 1}`}
-                      // Use h-[100dvh] for better mobile viewport handling
-                      className="w-full h-[100dvh] object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+          {loading ? (
+            <LoadingSkeleton />
+          ) : (
+            <>
+              <Carousel
+                plugins={[autoplay.current]}
+                opts={{ loop: true, duration: 50 }}
+                className="w-full h-full"
+              >
+                <CarouselContent className="ml-0 h-full">
+                  {images.map((img, index) => (
+                    <CarouselItem key={index} className="pl-0 h-full">
+                      <div className="relative w-full h-full overflow-hidden">
+                        <motion.img
+                          style={{ scale: imageScale }}
+                          src={img.url || img}
+                          alt={`Property ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Glassy Overlay linear */}
+                        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60 backdrop-brightness-90" />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
 
-          {/* Bottom Indicator Section - Optimized for Mobile */}
-          <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 z-40 flex items-center gap-3 md:gap-4">
-            <div className="h-[1px] md:h-0.5 w-16 md:w-24 bg-white/30 overflow-hidden">
+              {/* Floating Content Layer (Parallax Text) */}
               <motion.div 
-                className="h-full bg-white origin-left"
-                style={{ scaleX: smoothProgress }}
-              />
-            </div>
-            <span className="text-white text-[8px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-widest uppercase">
-              Scroll to Explore
-            </span>
-          </div>
+                style={{ y: textY, opacity }}
+                className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6"
+              >
+                <h2 className="text-white/70 text-xs md:text-sm font-bold tracking-[0.5em] uppercase mb-4">
+                  Experience Luxury
+                </h2>
+                <h1 className="text-white text-5xl md:text-8xl font-light tracking-tighter max-w-4xl">
+                  Refined <span className="italic font-serif text-white/80">Architecture</span>
+                </h1>
+              </motion.div>
 
-          {/* Floating Branding or Badge (Optional for extra "Nice" feel) */}
-          <div className="absolute top-8 right-6 md:top-12 md:right-12 z-40">
-             <span className="text-white/60 text-[8px] md:text-[10px] font-medium border border-white/20 px-3 py-1 rounded-full backdrop-blur-md">
-               PREMIUM REALTY
-             </span>
-          </div>
+              {/* Top Right Floating Badge */}
+              <div className="absolute top-12 right-12 z-40">
+                <div className="px-4 py-2 border border-white/20 bg-white/10 backdrop-blur-xl rounded-full">
+                  <span className="text-white text-[10px] font-bold tracking-widest uppercase">
+                    New Collection 2026
+                  </span>
+                </div>
+              </div>
+
+              {/* Bottom Navigation / Progress Bar */}
+              <div className="absolute bottom-12 left-12 right-12 z-40 flex items-end justify-between">
+                <div className="flex items-center gap-6">
+                  <div className="h-[2px] w-32 bg-white/20 relative overflow-hidden">
+                    <motion.div 
+                      className="absolute inset-0 bg-white origin-left"
+                      style={{ scaleX: smoothProgress }}
+                    />
+                  </div>
+                  <span className="text-white/50 text-[10px] font-medium tracking-widest">
+                    SCROLL TO REVEAL
+                  </span>
+                </div>
+                
+                {/* Minimalist Counter */}
+                <div className="hidden md:block">
+                  <p className="text-white/20 text-6xl font-light italic">01</p>
+                </div>
+              </div>
+            </>
+          )}
         </motion.div>
       </div>
     </div>

@@ -119,10 +119,10 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
   }, [activeSlide]);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden relative">
+    <section className="py-24 bg-linear-to-b from-white to-gray-50 overflow-hidden relative">
       {/* Enhanced Custom Cursor with AI states */}
       <motion.div
-        className="fixed top-0 left-0 w-24 h-24 bg-gradient-to-br from-white/95 to-gray-100/95 mix-blend-difference rounded-full pointer-events-none z-[50] flex items-center justify-center text-center border border-white/20 backdrop-blur-sm"
+        className="fixed top-0 left-0 w-24 h-24 bg-linear-to-br from-white/95 to-gray-100/95 mix-blend-difference rounded-full pointer-events-none z-[50] flex items-center justify-center text-center border border-white/20 backdrop-blur-sm"
         style={{
           x: cursorX,
           y: cursorY,
@@ -147,9 +147,9 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
 
       {/* Header with AI Counter */}
       <div className="px-6 lg:px-10 mb-16">
-        <div className="border-l-[6px] border-black pl-6 lg:pl-8 flex justify-between items-start">
+        <div className="border-l-[6px] border-secondary pl-6 lg:pl-8 flex justify-between items-start">
           <div>
-            <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-black uppercase leading-tight">
+            <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-secondary uppercase leading-tight">
               The Gallery
             </h2>
             <span className="text-sm font-medium text-gray-400 uppercase tracking-widest">
@@ -164,7 +164,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
             </div>
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="text-xs font-medium text-gray-400 uppercase tracking-widest hover:text-black mt-2 transition-colors"
+              className="text-xs font-medium text-gray-400 uppercase tracking-widest hover:text-secondary mt-2 transition-colors"
             >
               {isPlaying ? "Pause" : "Auto-play"}
             </button>
@@ -196,7 +196,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
             dynamicBullets: true,
             renderBullet: (index, className) => {
               return `<span class="${className} relative">
-                <span class="bullet-progress absolute top-0 left-0 h-full bg-black origin-left"></span>
+                <span class="bullet-progress absolute top-0 left-0 h-full bg-secondary origin-left"></span>
               </span>`;
             }
           }}
@@ -239,7 +239,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
                   duration: 0.8,
                   delay: i * 0.1 
                 }}
-                className="relative group overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200 aspect-[21/10] md:h-[75vh] w-full"
+                className="relative group overflow-hidden bg-linear-to-br from-neutral-100 to-neutral-200 aspect-[21/10] md:h-[75vh] w-full"
                 onClick={() => {
                   setIndex(i);
                   setOpen(true);
@@ -257,7 +257,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
                     <motion.div
                       initial={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                      className="absolute inset-0 bg-linear-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
                     />
                   )}
                 </AnimatePresence>
@@ -279,7 +279,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
                 {/* Enhanced Floating Tag with AI indicator */}
                 <div className="absolute top-6 right-6 lg:top-8 lg:right-8">
                   <motion.div 
-                    className="bg-gradient-to-r from-black to-gray-900 text-white text-[10px] px-4 py-2 uppercase tracking-[0.2em] font-bold flex items-center gap-2"
+                    className="bg-linear-to-r from-black to-gray-900 text-white text-[10px] px-4 py-2 uppercase tracking-[0.2em] font-bold flex items-center gap-2"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -290,14 +290,14 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
 
                 {/* Slide Number Indicator */}
                 <div className="absolute bottom-6 left-6 lg:bottom-8 lg:left-8">
-                  <div className="text-white text-sm font-bold bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                  <div className="text-white text-sm font-bold bg-secondary/50 px-3 py-1 rounded-full backdrop-blur-sm">
                     {i + 1}
                   </div>
                 </div>
 
                 {/* Hover Overlay with Quick Actions */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-6 lg:p-8"
+                  className="absolute inset-0 bg-linear-to-t from-secondary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-6 lg:p-8"
                   initial={false}
                 >
                   <div className="text-white">
@@ -316,7 +316,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
         <div className="absolute bottom-4 right-6 lg:right-10 z-50 flex items-center gap-6">
           <div className="flex gap-3 lg:gap-4">
             <motion.button 
-              className="custom-prev w-12 h-12 lg:w-16 lg:h-16 bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition-all duration-300 rounded-full"
+              className="custom-prev w-12 h-12 lg:w-16 lg:h-16 bg-secondary text-white flex items-center justify-center hover:bg-primary transition-all duration-300 rounded-full"
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -325,7 +325,7 @@ const GalleryDetProject = ({ project_gallery = [] }) => {
               </svg>
             </motion.button>
             <motion.button 
-              className="custom-next w-12 h-12 lg:w-16 lg:h-16 bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition-all duration-300 rounded-full"
+              className="custom-next w-12 h-12 lg:w-16 lg:h-16 bg-secondary text-white flex items-center justify-center hover:bg-primary transition-all duration-300 rounded-full"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
             >

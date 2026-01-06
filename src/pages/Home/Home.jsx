@@ -16,6 +16,8 @@ import BigBannerSkeleton from "@/components/skeletons/bigBannerSkeleton";
 import HomeBuildingSkeleton from "@/components/skeletons/homeBuildingSkeleton";
 import HomeMiniAbout from "./HomeMiniAbout/HomeMiniAbout";
 import HomeMiniAboutSkeleton from "@/components/skeletons/homeMiniAboutSkeleton";
+import CommonBanner from "@/components/commonBanner/commonBanner";
+import aboutImg from "../../assets/BannerImages/About.png";
 
 const Home = () => {
   const { data: bannerData, isLoading: bannerLoading } =
@@ -33,14 +35,18 @@ const Home = () => {
   const { data: homeProjectsData, isLoading: homeProjectsLoading } =
     useGetAllProjectsQuery();
 
-  const images = bannerData?.data?.map((item) => item.image);
-
-  const miniAbout = miniAboutApi?.data?.[0];
-
-  return (
-    <>
+    const images = bannerData?.data?.map((item) => item.image);
+    
+    const miniAbout = miniAboutApi?.data?.[0];
+    
+    return (
+      <>
       <div className="bg-white">
-        <div className="flex items-center justify-center py-30">
+        <HomeProjects
+          projects={homeProjectsData?.data}
+          loading={homeProjectsLoading}
+        />
+        {/* <div className="flex items-center justify-center py-30">
           <h1 className="text-4xl md:text-9xl -mb-24 font-extralight text-[#3C3C3B] tracking-[0.2em] text-center uppercase">
             setting standards
           </h1>
@@ -49,7 +55,14 @@ const Home = () => {
           <BigBannerSkeleton />
         ) : (
           <BigBanner images={images} loading={bannerLoading} />
-        )}
+        )} */}
+
+        {/* <CommonBanner
+          backgroundImage={aboutImg}
+          subtitle="Our Team"
+          title="About Us"
+          highlight="Excellence"
+        /> */}
 
         {homeBuildingDataLoading || !homeBuildingData ? (
           <HomeBuildingSkeleton />
@@ -75,22 +88,13 @@ const Home = () => {
           />
         )}
 
-        <HomeProjects
-          projects={homeProjectsData?.data}
-          loading={homeProjectsLoading}
-        />
 
-        <div className="">
-          <CommonMap
-            google_map_embed={settingData?.data?.[0]?.google_map_embed}
-            loading={settingDataLoading}
-          />
-        </div>
-
-        <ContactSection
-          settings={settingData}
+        <CommonMap
+          google_map_embed={settingData?.data?.[0]?.google_map_embed}
           loading={settingDataLoading}
         />
+
+        <ContactSection settings={settingData} loading={settingDataLoading} />
       </div>
     </>
   );

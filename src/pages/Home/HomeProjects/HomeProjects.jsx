@@ -51,9 +51,9 @@ const HomeProjects = ({ projects = [], loading }) => {
                 style={{ backgroundImage: `url(${project.image})` }}
               />
               
-              {/* Gradient Overlays for Readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+              {/* linear Overlays for Readability */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/30" />
+              <div className="absolute inset-0 bg-linear-to-r from-black/60 via-transparent to-transparent" />
             </div>
           </SwiperSlide>
         ))}

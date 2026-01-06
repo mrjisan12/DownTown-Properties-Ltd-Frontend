@@ -25,12 +25,12 @@ const MainProject = ({ projects }) => {
 
   return (
     <section
-      className="max-w-7xl mx-auto px-6 py-24"
+      className="max-w-7xl mx-auto md:px-6 py-24"
       onMouseLeave={resetHover}
     >
       {/* Section Header */}
       <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent mb-4">
+        <h2 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent mb-4">
           Featured Projects
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -60,7 +60,7 @@ const MainProject = ({ projects }) => {
             >
               {/* Hover Glow */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent transition-opacity duration-300 ${
+                className={`absolute inset-0 bg-linear-to-br from-primary/5 to-transparent transition-opacity duration-300 ${
                   isHovered ? "opacity-100" : "opacity-0"
                 }`}
               />
@@ -75,7 +75,7 @@ const MainProject = ({ projects }) => {
                   }}
                 >
                   <div className="w-20 h-20 rounded-full border-2 border-primary/40 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center animate-pulse">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary to-accent flex items-center justify-center animate-pulse">
                       <svg
                         className="w-4 h-4 text-primary-foreground"
                         fill="none"

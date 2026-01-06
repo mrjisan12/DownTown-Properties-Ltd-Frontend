@@ -2,14 +2,13 @@
 import CommonBanner from "@/components/commonBanner/commonBanner";
 import { useGetAboutQuery, useGetAllstaffQuery } from "@/redux/api/aboutApi";
 import React from "react";
-import aboutImg from "../../assets/BannerImages/About.png";
 import MiniAbout from "./MiniAbout/MiniAbout";
 import MissionVision from "./MissionVision/MissionVision";
 import Staff from "./Staff/Staff";
 import { useGetMiniAboutQuery } from "@/redux/api/homeApi";
 import MiniAboutSkeleton from "@/components/skeletons/miniAboutSkeleton";
 import MissionVisionSkeleton from "@/components/skeletons/missionVisionSkeleton";
-import StaffSkeleton from "./Staff/Staff";
+import CommonBannerSkeleton from "@/components/skeletons/commonBannerSkeleton";
 
 const About = () => {
   window.scrollTo({
@@ -24,22 +23,24 @@ const About = () => {
   const about = aboutData?.data?.[0];
   const staffList = staffData?.data || [];
   const miniAbout = miniAboutApi?.data?.[0];
-
+  if (aboutLoading) {
+    return <CommonBannerSkeleton />;
+  }
   return (
     <>
       <CommonBanner
-        backgroundImage={about?.banner || aboutImg}
+        backgroundImage={about?.banner}
         subtitle="Our Team"
         title="About Us"
         highlight="Excellence"
       />
 
       {/* MiniAbout Section */}
-      {miniAboutLoading || !miniAbout ? (
+      {aboutLoading || !about ? (
         <MiniAboutSkeleton />
       ) : (
         <MiniAbout
-          loading={aboutLoading || miniAboutLoading}
+          loading={aboutLoading}
           about={about}
           metrics={miniAbout?.metrics || []}
         />
@@ -47,14 +48,14 @@ const About = () => {
 
       {/* MissionVision Section */}
       {aboutLoading || !about ? (
-        <MissionVisionSkeleton/>
+        <MissionVisionSkeleton />
       ) : (
         <MissionVision loading={aboutLoading} about={about} />
       )}
 
       {/* Staff Section */}
-    
-        <Staff loading={staffLoading} staff={staffList} />
+
+      <Staff loading={staffLoading} staff={staffList} />
     </>
   );
 };

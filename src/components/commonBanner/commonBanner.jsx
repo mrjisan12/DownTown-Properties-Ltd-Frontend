@@ -24,7 +24,7 @@ const CommonBanner = ({
           className="h-full w-full bg-center bg-cover"
           style={{ backgroundImage: `url("${backgroundImage}")` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/70" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/70" />
       </motion.div>
 
       {/* Text */}

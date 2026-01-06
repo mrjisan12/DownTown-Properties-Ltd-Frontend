@@ -13,7 +13,7 @@ const BigBannerSkeleton = () => {
           {/* Shimmering Image Area */}
           <div className="relative w-full h-[100dvh] overflow-hidden bg-neutral-900">
             {/* Custom Shimmer Effect (White/Gray/Dark) */}
-            <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+            <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-linear-to-r from-transparent via-white/[0.05] to-transparent" />
             
             {/* Center Loading Spinner */}
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
@@ -25,8 +25,8 @@ const BigBannerSkeleton = () => {
             </div>
           </div>
 
-          {/* Overlay Gradient (Darker for contrast) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+          {/* Overlay linear (Darker for contrast) */}
+          <div className="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60" />
 
           {/* Bottom Scroll Indicator Skeleton */}
           <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 z-40 flex items-center gap-3 md:gap-4">

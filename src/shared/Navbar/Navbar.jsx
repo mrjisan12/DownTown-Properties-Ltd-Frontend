@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useMatch } from "react-router-dom";
 import {
   Phone,
   X,
@@ -12,13 +12,15 @@ import {
   Youtube,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../assets/dwntwn.png";
+import logo from "../../assets/Downtown LTD Logo.png";
+import SupportModal from "@/components/supportModal/supportModal";
 
 const navItems = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
   { label: "Projects", path: "/projects" },
   { label: "Gallery", path: "/gallery" },
+  { label: "Testimonial", path: "/testimonial" },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -32,16 +34,17 @@ const platformIcons = {
   default: <ExternalLink size={20} />,
 };
 
-const Navbar = ({ socialLinks = [] }) => {
+const Navbar = ({ socialLinks = [], settingData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false); // New state for background
   const [lastScrollY, setLastScrollY] = useState(0);
-
+  const [callOpen, setCallOpen] = useState(false);
   const sortedSocialLinks = [...socialLinks].sort(
     (a, b) => a.position - b.position
   );
   const location = useLocation();
+  const projectMatch = useMatch("/project/:id");
   const isHome = location.pathname === "/";
 
   const getPlatformIcon = (platform) => {
@@ -82,6 +85,11 @@ const Navbar = ({ socialLinks = [] }) => {
 
   return (
     <>
+      <SupportModal
+        isOpen={callOpen}
+        onClose={() => setCallOpen(false)}
+        phoneNumber={ settingData?.data[0].primary_phone|| "01872175065"} // Pass data from your settings
+      />
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -114,7 +122,7 @@ const Navbar = ({ socialLinks = [] }) => {
                 src={logo}
                 alt="Logo"
                 // Added brightness filter if logo is white and needs to be dark on scrolled navbar
-                className={`h-10 md:h-12 w-auto transition-all ${
+                className={`h-10 md:h-20 w-auto transition-all ${
                   isScrolled ? "brightness-100" : "drop-shadow-xl"
                 }`}
               />
@@ -134,7 +142,7 @@ const Navbar = ({ socialLinks = [] }) => {
                 }
               `}
             >
-              Down Town Properties LTD
+              {/* Down Town Properties LTD */}
             </motion.h1>
           </div>
 
@@ -185,7 +193,7 @@ const Navbar = ({ socialLinks = [] }) => {
       >
         {/* ... (rest of your sidebar code remains the same) ... */}
         <div className="relative flex flex-col h-full p-12">
-          <div className="flex justify-between items-center mb-20">
+          <div className="flex justify-between items-center mb-7">
             <span className="text-xl uppercase tracking-[0.5em] text-primary font-black">
               Navigation
             </span>
@@ -208,15 +216,20 @@ const Navbar = ({ socialLinks = [] }) => {
                 <NavLink
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={({ isActive }) => `
-                    group flex items-center justify-between py-5 text-4xl font-light tracking-tighter
-                    ${
-                      isActive
-                        ? "text-primary font-normal"
-                        : "text-black/60 hover:text-black"
-                    }
-                    transition-all duration-300
-                  `}
+                  className={({ isActive }) => {
+                    const isProjectsActive =
+                      isActive || (item.path === "/projects" && projectMatch);
+
+                    return `
+      group flex items-center justify-between py-5 text-4xl font-light tracking-tighter
+      ${
+        isProjectsActive
+          ? "text-primary font-normal"
+          : "text-black/60 hover:text-black"
+      }
+      transition-all duration-300
+    `;
+                  }}
                 >
                   {item.label}
                   <ArrowRight
@@ -243,15 +256,15 @@ const Navbar = ({ socialLinks = [] }) => {
               ))}
             </div>
 
-            <a
-              href="tel:01712345667"
-              className="flex items-center justify-center gap-4 bg-primary text-white py-5 rounded-xl font-bold hover:brightness-110 transition-all"
+            <button
+              onClick={() => setCallOpen(true)} // This triggers the modal
+              className="flex items-center mb-7 justify-center gap-4 bg-primary text-white py-5 rounded-xl font-bold hover:brightness-110 transition-all w-full"
             >
               <Phone size={18} />
               <span className="uppercase tracking-widest text-xs text-white">
                 Contact Support
               </span>
-            </a>
+            </button>
           </div>
         </div>
       </motion.div>

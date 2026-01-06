@@ -1,7 +1,7 @@
 import React from "react";
 
 const shimmer =
-  "animate-pulse bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200";
+  "animate-pulse bg-linear-to-r from-zinc-200 via-zinc-300 to-zinc-200";
 
 const HomeBuildingSkeleton = () => {
   return (
