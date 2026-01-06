@@ -20,6 +20,10 @@ import CommonBanner from "@/components/commonBanner/commonBanner";
 import aboutImg from "../../assets/BannerImages/About.png";
 
 const Home = () => {
+    window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   const { data: bannerData, isLoading: bannerLoading } =
     useGetHomeBannerQuery();
 

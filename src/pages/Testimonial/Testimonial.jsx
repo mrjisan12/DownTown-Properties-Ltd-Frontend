@@ -7,11 +7,14 @@ import ChairmanSpeech from "./ChairmanSpeech/ChairmanSpeech";
 import CommonBannerSkeleton from "@/components/skeletons/commonBannerSkeleton";
 
 const Testimonial = () => {
-  const { data: testimonialData, isLoading } =
-    useGetAllTestimonialQuery();
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+  const { data: testimonialData, isLoading } = useGetAllTestimonialQuery();
 
   if (isLoading) {
-    return <CommonBannerSkeleton/>
+    return <CommonBannerSkeleton />;
   }
 
   // ✅ Safety check
@@ -34,9 +37,7 @@ const Testimonial = () => {
 
       {chairmanData && <ChairmanSpeech data={chairmanData} />}
 
-      {testimonialList.length > 0 && (
-        <MainTestimonial data={testimonialList} />
-      )}
+      {testimonialList.length > 0 && <MainTestimonial data={testimonialList} />}
     </div>
   );
 };

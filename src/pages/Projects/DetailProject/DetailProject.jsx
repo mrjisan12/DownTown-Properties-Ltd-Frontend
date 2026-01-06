@@ -9,6 +9,10 @@ import GalleryDetProject from "./GalleryDetProject";
 import CommonBannerSkeleton from "@/components/skeletons/commonBannerSkeleton";
 
 const DetailProject = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   const { id } = useParams();
 
   const { data, isLoading, isError } = useGetDetailProjectsQuery(id);

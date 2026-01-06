@@ -8,6 +8,10 @@ import CommonBanner from "../../components/commonBanner/commonBanner";
 import projectImg from "../../assets/BannerImages/Project.jpeg";
 
 const Projects = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   const { data, isLoading } = useGetHomeProjectsQuery();
 
   const projects = data?.data || [];

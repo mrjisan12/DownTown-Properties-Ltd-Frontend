@@ -11,6 +11,10 @@ import VideoGallery from "./VideoGalllery/VideoGallery";
 import PhotoGallerySkeleton from "@/components/skeletons/PhotoGallerySkeleton";
 import VideoGallerySkeleton from "@/components/skeletons/VideoGallerySkeleton";
 const Gallery = () => {
+    window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   const { data: galleryImageData, isLoading: galleryImageLoading } =
     useGetGalleryImageQuery();
   const { data: galleryVideosData, isLoading: galleryVideosLoading } =

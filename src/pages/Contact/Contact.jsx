@@ -14,6 +14,10 @@ import ContactSectionSkeleton from "@/components/skeletons/contactSectionSkeleto
 import MessageSuccess from "@/components/messageSuccess/messageSuccess";
 
 const Contact = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   // SETTINGS
   const { data: settingData, isLoading: settingDataLoading } =
     useGetSettingsQuery();
