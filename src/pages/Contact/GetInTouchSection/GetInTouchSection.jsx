@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 
 const GetInTouchSection = ({ onSubmit, loading, settings }) => {
-  console.log(settings?.data[0].google_map_embed);
   const embedUrl = settings?.data[0]?.google_map_embed;
 
   // fallback-safe clickable link
@@ -56,7 +55,7 @@ const GetInTouchSection = ({ onSubmit, loading, settings }) => {
       </div>
 
       <div className="container mx-auto md:px-6 relative z-10">
-        <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
+        <div className="bg-white md:rounded-[40px] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
           {/* LEFT — FORM SIDE */}
           <div className="lg:w-3/5 p-8 md:p-16 lg:p-20">
             <header className="mb-12">

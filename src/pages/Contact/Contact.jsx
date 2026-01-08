@@ -58,6 +58,23 @@ const Contact = () => {
       />
       {/* CONTACT FORM */}
 
+      {contactLoading || !settingData ? (
+        <GetInTouchSectionSkeleton />
+      ) : (
+        <GetInTouchSection
+          InTouchSection
+          onSubmit={handleContactSubmit}
+          loading={contactLoading}
+          settings={settingData}
+        />
+      )}
+      {/* MAP */}
+      <div className="-mb-20">
+        <CommonMap
+          google_map_embed={settingData?.data?.[0]?.google_map_embed}
+          loading={settingDataLoading}
+        />
+      </div>
       {settingDataLoading || socialLinksLoading ? (
         <ContactSectionSkeleton />
       ) : (
@@ -67,23 +84,6 @@ const Contact = () => {
           loading={settingDataLoading || socialLinksLoading}
         />
       )}
-      {contactLoading || !settingData ? (
-        <GetInTouchSectionSkeleton />
-      ) : (
-        <GetInTouchSection
-          onSubmit={handleContactSubmit}
-          loading={contactLoading}
-          settings={settingData}
-        />
-      )}
-
-      {/* MAP */}
-      <div className="-mb-20">
-        <CommonMap
-          google_map_embed={settingData?.data?.[0]?.google_map_embed}
-          loading={settingDataLoading}
-        />
-      </div>
     </div>
   );
 };

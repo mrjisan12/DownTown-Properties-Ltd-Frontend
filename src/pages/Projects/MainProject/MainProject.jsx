@@ -9,7 +9,11 @@ const MainProject = ({ projects }) => {
 
   const projectRefs = useRef([]);
 
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+
   const handleMouseMove = (index, e) => {
+    if (!isDesktop) return;
+
     const rect = projectRefs.current[index]?.getBoundingClientRect();
     if (!rect) return;
 
@@ -19,26 +23,24 @@ const MainProject = ({ projects }) => {
     });
   };
 
-  const resetHover = () => {
-    setHoveredProject(null);
-  };
+  const resetHover = () => setHoveredProject(null);
 
   return (
     <section
-      className="max-w-7xl mx-auto md:px-6 py-24"
+      className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24"
       onMouseLeave={resetHover}
     >
       {/* Section Header */}
-      <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent mb-4">
+      <div className="text-center mb-10 md:mb-16">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-linear-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent mb-3 md:mb-4">
           Featured Projects
         </h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base md:text-xl text-muted-foreground max-w-xl md:max-w-2xl mx-auto">
           Discover our carefully crafted projects, each telling a unique story of innovation and design
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
         {projects.map((project, index) => {
           const isHovered = hoveredProject === index;
 
@@ -47,26 +49,26 @@ const MainProject = ({ projects }) => {
               key={project.id}
               ref={(el) => (projectRefs.current[index] = el)}
               className={`
-                group relative rounded-3xl overflow-hidden bg-card
+                group relative rounded-2xl md:rounded-3xl overflow-hidden bg-card
                 transition-all duration-300
                 hover:shadow-2xl hover:shadow-primary/10
                 ${index % 2 !== 0 ? "md:translate-y-24" : ""}
-                ${isHovered ? "scale-[1.02]" : ""}
+                ${isHovered ? "md:scale-[1.02]" : ""}
                 border border-border/50
               `}
-              onMouseEnter={() => setHoveredProject(index)}
+              onMouseEnter={() => isDesktop && setHoveredProject(index)}
               onMouseLeave={resetHover}
               onMouseMove={(e) => handleMouseMove(index, e)}
             >
-              {/* Hover Glow */}
+              {/* Hover Glow (desktop only) */}
               <div
                 className={`absolute inset-0 bg-linear-to-br from-primary/5 to-transparent transition-opacity duration-300 ${
                   isHovered ? "opacity-100" : "opacity-0"
-                }`}
+                } hidden md:block`}
               />
 
-              {/* ✅ Custom Hover Cursor (CARD ONLY) */}
-              {isHovered && (
+              {/* Custom Hover Cursor (desktop only) */}
+              {isHovered && isDesktop && (
                 <div
                   className="absolute pointer-events-none z-30"
                   style={{
@@ -97,7 +99,7 @@ const MainProject = ({ projects }) => {
               {/* Image */}
               <div
                 onClick={() => navigate(`/project/${project.id}`)}
-                className="relative h-96 overflow-hidden cursor-pointer"
+                className="relative h-56 sm:h-72 md:h-96 overflow-hidden cursor-pointer"
               >
                 <img
                   src={project.image}
@@ -108,20 +110,22 @@ const MainProject = ({ projects }) => {
               </div>
 
               {/* Content */}
-              <div className="p-8 bg-card relative z-10 space-y-4">
-                <span className="text-sm uppercase tracking-wider text-primary">
+              <div className="p-4 sm:p-6 md:p-8 bg-card relative z-10 space-y-3 md:space-y-4">
+                <span className="text-xs sm:text-sm uppercase tracking-wider text-primary">
                   {project.project_type}
                 </span>
 
-                <h3 className="text-3xl font-bold">{project.title}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">
+                  {project.title}
+                </h3>
 
-                <p className="text-muted-foreground line-clamp-2">
+                <p className="text-sm md:text-base text-muted-foreground line-clamp-2">
                   {project.short_description}
                 </p>
 
                 <button
                   onClick={() => navigate(`/project/${project.id}`)}
-                  className="mt-4 text-primary font-semibold uppercase tracking-wide"
+                  className="mt-2 md:mt-4 text-sm md:text-base text-primary font-semibold uppercase tracking-wide"
                 >
                   Explore →
                 </button>

@@ -3,20 +3,22 @@ import React from "react";
 const SkeletonCard = ({ large, tall }) => {
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl bg-linear-to-br from-gray-900 via-gray-800 to-gray-900
-        ${large ? "md:col-span-2 md:row-span-2" : ""}
-        ${tall ? "md:row-span-2" : ""}`}
+      className={`relative overflow-hidden rounded-3xl 
+      bg-linear-to-br from-white via-gray-100 to-white border border-gray-200
+      ${large ? "md:col-span-2 md:row-span-2" : ""}
+      ${tall ? "md:row-span-2" : ""}`}
     >
       {/* shimmer */}
       <div className="absolute inset-0 animate-skeleton">
-        <div className="absolute -inset-[150%] bg-linear-to-r from-transparent via-white/10 to-transparent rotate-12" />
+        <div className="absolute -inset-[150%] 
+          bg-linear-to-r from-transparent via-gray-300/40 to-transparent rotate-12" />
       </div>
 
       {/* fake text */}
       <div className="absolute inset-0 p-8 flex flex-col justify-end gap-3">
-        <div className="w-20 h-2 bg-gray-700 rounded" />
-        <div className="w-32 h-2 bg-gray-700 rounded" />
-        <div className="w-3/4 h-4 bg-gray-600 rounded mt-2" />
+        <div className="w-20 h-2 bg-gray-200 rounded" />
+        <div className="w-32 h-2 bg-gray-200 rounded" />
+        <div className="w-3/4 h-4 bg-gray-300 rounded mt-2" />
       </div>
     </div>
   );
@@ -55,7 +57,7 @@ const PhotoGallerySkeleton = () => {
           }
 
           .animate-skeleton {
-            animation: skeleton 1.6s linear infinite;
+            animation: skeleton 1.6s ease-in-out infinite;
           }
         `}
       </style>

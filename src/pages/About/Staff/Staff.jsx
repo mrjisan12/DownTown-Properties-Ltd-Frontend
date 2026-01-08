@@ -41,7 +41,7 @@ const Staff = ({ staff = [], loading }) => {
       {/* Subtle Background Accent */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 translate-x-20 pointer-events-none" />
 
-      <div className="container relative mx-auto px-6">
+      <div className="container relative mx-auto md:px-6">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <motion.div

@@ -33,7 +33,7 @@ const Footer = ({ socialLinks = [] }) => {
   ];
 
   return (
-    <footer className="relative bg-linear-to-b from-secondary to-gray-900 text-slate-300 mt-20 overflow-hidden">
+    <footer className="relative bg-linear-to-b from-secondary to-gray-900 text-slate-300  overflow-hidden">
       {/* Decorative Top Border */}
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary to-transparent" />
 

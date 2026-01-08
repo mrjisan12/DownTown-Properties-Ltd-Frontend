@@ -20,7 +20,7 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
   useEffect(() => {
     if (isInView && metrics.length > 0) {
       metrics.forEach((metric) => {
-        const targetValue = parseInt(metric.value.replace(/[^0-9]/g, ''));
+        const targetValue = parseInt(metric.value.replace(/[^0-9]/g, ""));
         if (!isNaN(targetValue)) {
           let start = 0;
           const duration = 2000;
@@ -31,9 +31,9 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
               start = targetValue;
               clearInterval(counter);
             }
-            setAnimatedValues(prev => ({
+            setAnimatedValues((prev) => ({
               ...prev,
-              [metric.id]: Math.floor(start).toLocaleString()
+              [metric.id]: Math.floor(start).toLocaleString(),
             }));
           }, 16);
         }
@@ -42,29 +42,26 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
   }, [isInView, metrics]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-white py-24"
+      className="relative overflow-hidden bg-white py-16 md:py-24"
     >
-      {/* Subtle Background Elements */}
+      {/* Background Blur */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-125 h-125 bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-slate-200/50 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-slate-200/50 rounded-full blur-[120px]" />
       </div>
 
-      <div className="container relative mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
-          {/* IMAGE SECTION - "Moving Video" Effect */}
+      <div className="container mx-auto relative px-4 md:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* IMAGE SECTION */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
-            style={{
-              perspective: 1000
-            }}
+            style={{ perspective: 1000 }}
             className="relative"
           >
             <motion.div
@@ -72,21 +69,12 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
                 rotateY: mousePos.x * 10,
                 rotateX: -mousePos.y * 10,
               }}
-              className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100"
+              className="relative rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100"
             >
-              {/* Ken Burns Moving Image Effect */}
               <motion.div
-                animate={{
-                  scale: [1, 1.1, 1],
-                  x: [0, -10, 0],
-                  y: [0, -5, 0]
-                }}
-                transition={{
-                  duration: 15,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="w-full h-137.5"
+                animate={{ scale: [1, 1.1, 1], x: [0, -10, 0], y: [0, -5, 0] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="w-full h-[260px] sm:h-[360px] md:h-[440px]"
               >
                 <img
                   src={about.banner}
@@ -95,43 +83,55 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
                 />
               </motion.div>
 
-              {/* Glassmorphism Badge */}
-              <div className="absolute bottom-8 left-8 right-8 p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2H4zm11 10H5a1 1 0 01-1-1v-4a1 1 0 011-1h10a1 1 0 011 1v4a1 1 0 01-1 1z" clipRule="evenodd" />
+              {/* Glass Badge */}
+              <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 right-4 md:right-8 p-4 md:p-6 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl md:rounded-2xl">
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center text-white">
+                    <svg
+                      className="w-5 h-5 md:w-6 md:h-6"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2H4z" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-white font-bold text-lg">Excellence in Service</p>
-                    <p className="text-white/80 text-sm italic">Established Corporate Quality</p>
+                    <p className="text-white font-semibold text-sm md:text-lg">
+                      Excellence in Service
+                    </p>
+                    <p className="text-white/80 text-xs md:text-sm italic">
+                      Established Corporate Quality
+                    </p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Decorative Floating Squares */}
-            <motion.div 
+            <motion.div
               animate={{ y: [0, 20, 0] }}
               transition={{ duration: 5, repeat: Infinity }}
-              className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-3xl -z-10" 
+              className="absolute -bottom-6 -right-6 w-24 h-24 md:w-32 md:h-32 bg-primary/10 rounded-3xl -z-10"
             />
           </motion.div>
 
           {/* CONTENT SECTION */}
-          <div className="flex flex-col space-y-8">
+          <div className="flex flex-col space-y-6 md:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="h-[2px] w-8 bg-primary"></span>
-                <span className="text-primary font-bold tracking-widest text-sm uppercase">Legacy & Vision</span>
+              <div className="flex items-center gap-3 mb-3 md:mb-4">
+                <span className="h-[2px] w-6 md:w-8 bg-primary"></span>
+                <span className="text-primary font-bold tracking-widest text-xs md:text-sm uppercase">
+                  Legacy & Vision
+                </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-                Crafting Exceptional <br /> 
-                <span className="text-primary underline decoration-slate-200 underline-offset-8">Real Estate Experiences</span>
+
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 leading-tight">
+                Crafting Exceptional <br />
+                <span className="text-primary underline decoration-slate-200 underline-offset-8">
+                  Real Estate Experiences
+                </span>
               </h2>
             </motion.div>
 
@@ -139,33 +139,34 @@ const MiniAbout = ({ about, metrics = [], loading }) => {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.3 }}
-              className="text-slate-600 text-lg leading-relaxed border-l-4 border-slate-100 pl-6 py-2"
+              className="text-slate-600 text-sm md:text-lg leading-relaxed border-l-4 border-slate-100  md:pl-6"
             >
               {about.who_we_are}
             </motion.p>
 
-            {/* METRICS GRID - Professional Solid Cards */}
-            <div className="grid grid-cols-2 gap-4 pt-4">
+            {/* METRICS */}
+            <div className="grid grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
               {metrics.map((item, index) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-slate-50 border border-slate-100 p-6 rounded-2xl group hover:bg-primary transition-colors duration-500"
+                  className="bg-slate-50 border border-slate-100 p-4 md:p-6 rounded-xl md:rounded-2xl group hover:bg-primary transition-colors"
                 >
-                  <h3 className="text-3xl font-bold text-slate-900 group-hover:text-white transition-colors">
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-white">
                     {animatedValues[item.id] || 0}
-                    <span className="text-primary group-hover:text-white/80">+</span>
+                    <span className="text-primary group-hover:text-white/80">
+                      +
+                    </span>
                   </h3>
-                  <p className="text-slate-500 text-sm uppercase font-semibold group-hover:text-white/70 transition-colors">
+                  <p className="text-slate-500 text-xs md:text-sm uppercase font-semibold group-hover:text-white/70">
                     {item.name}
                   </p>
                 </motion.div>
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>
